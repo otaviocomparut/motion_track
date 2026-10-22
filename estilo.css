@@ -1,0 +1,13 @@
+p{
+    color : red ;
+}
+
+div {
+
+    color: red ;
+    background: green;
+    padding: 30px;
+    border-radius: 2px;
+    border: 2px solid red;
+    margin: 20px;
+}
