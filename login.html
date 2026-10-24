@@ -1,75 +1,53 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
-
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Motion Track - Login</title>
-
-<link rel="stylesheet" href="estilo.css"/>
-
+    <meta charset="UTF-8">
+    <title>Motion Track - Login</title>
 </head>
 
 <body>
 
-<div class="container">
+    <h1>Motion Track</h1>
 
-<div class="logo">
+    <h2>Login</h2>
 
-<h1>Motion Track</h1>
+    <form id="loginForm">
 
-<p>Rastreamento Inteligente de Movimento</p>
+        <label>Email</label>
+        <br>
+        <input
+            type="email"
+            id="email"
+            required
+        >
 
-</div>
+        <br><br>
 
-<form id="loginForm">
+        <label>Senha</label>
+        <br>
+        <input
+            type="password"
+            id="senha"
+            required
+        >
 
-<div class="input-group">
+        <br><br>
 
-<label>Email</label>
+        <button type="submit">
+            Entrar
+        </button>
 
-<input
-type="email"
-id="email"
-required
->
+    </form>
 
-</div>
+    <br>
 
-<div class="input-group">
+    <a href="cadastro.html">
+        Criar Conta
+    </a>
 
-<label>Senha</label>
-
-<input
-type="password"
-id="senha"
-required
->
-
-</div>
-
-<button type="submit">
-
-Entrar
-
-</button>
-
-</form>
-
-<div class="link">
-
-<a href="cadastro.html">
-
-Criar conta
-
-</a>
-
-</div>
-
-</div>
-
-<script src="js/auth.js"></script>
+    <script src="auth.js"></script>
 
 </body>
+
 </html>

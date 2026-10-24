@@ -1,41 +1,43 @@
+console.log("AUTH CARREGADO");
 const cadastroForm =
 document.getElementById("cadastroForm");
 
 if(cadastroForm){
 
-cadastroForm.addEventListener(
-"submit",
-function(e){
+    cadastroForm.addEventListener(
+        "submit",
+        function(e){
 
-e.preventDefault();
+            e.preventDefault();
 
-const usuario = {
+            const usuario = {
 
-nome:
-document.getElementById("nome").value,
+                nome:
+                document.getElementById("nome").value,
 
-email:
-document.getElementById("emailCadastro").value,
+                email:
+                document.getElementById("emailCadastro").value,
 
-senha:
-document.getElementById("senhaCadastro").value,
+                senha:
+                document.getElementById("senhaCadastro").value,
 
-tipo:
-document.getElementById("tipoUsuario").value
+                tipo:
+                document.getElementById("tipoUsuario").value
 
-};
+            };
 
-localStorage.setItem(
-usuario.email,
-JSON.stringify(usuario)
-);
+            localStorage.setItem(
+                usuario.email,
+                JSON.stringify(usuario)
+            );
 
-alert("Conta criada com sucesso!");
+            alert("Conta criada com sucesso!");
 
-window.location.href =
-"login.html";
+            window.location.href =
+            "login.html";
 
-});
+        }
+    );
 
 }
 
@@ -44,45 +46,54 @@ document.getElementById("loginForm");
 
 if(loginForm){
 
-loginForm.addEventListener(
-"submit",
-function(e){
+    loginForm.addEventListener(
+        "submit",
+        function(e){
 
-e.preventDefault();
+            e.preventDefault();
 
-const email =
-document.getElementById("email").value;
+            const email =
+            document.getElementById("email").value;
 
-const senha =
-document.getElementById("senha").value;
+            const senha =
+            document.getElementById("senha").value;
 
-const usuario =
-JSON.parse(
-localStorage.getItem(email)
-);
+            const usuario = JSON.parse(
+                localStorage.getItem(email)
+            );
 
-if(!usuario){
+            if(!usuario){
 
-alert("Usuário não encontrado!");
+                alert("Usuário não encontrado");
+                return;
 
-return;
+            }
 
-}
+            if(usuario.senha !== senha){
 
-if(usuario.senha !== senha){
+                alert("Senha incorreta");
+                return;
 
-alert("Senha incorreta!");
+            }
 
-return;
+            localStorage.setItem(
+                "usuarioLogado",
+                JSON.stringify(usuario)
+            );
 
-}
+            if(usuario.tipo === "profissional"){
 
-localStorage.setItem(
-"usuarioLogado",
-JSON.stringify(usuario)
-);
+                window.location.href =
+                "dashboard-profissional.html";
 
-alert("Login realizado!");
+            }else{
 
-});
+                window.location.href =
+                "dashboard-paciente.html";
+
+            }
+
+        }
+    );
+
 }

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard Profissional</title>
+</head>
+
+<body>
+
+    <h1>Painel do Profissional</h1>
+
+    <h2 id="nomeProfissional"></h2>
+
+    <hr>
+
+    <h3>Cadastrar Paciente</h3>
+
+    <form id="formPaciente">
+
+        <input
+            type="text"
+            id="nomePaciente"
+            placeholder="Nome"
+            required
+        >
+
+        <br><br>
+
+        <input
+            type="email"
+            id="emailPaciente"
+            placeholder="Email"
+            required
+        >
+
+        <br><br>
+
+        <button type="submit">
+            Salvar Paciente
+        </button>
+
+    </form>
+
+    <hr>
+
+    <h3>Pacientes</h3>
+
+    <ul id="listaPacientes"></ul>
+
+    <hr>
+
+    <h3>Criar Exercício</h3>
+
+    <form id="formExercicio">
+
+        <select id="pacienteSelecionado"></select>
+
+        <br><br>
+
+        <select id="tipoExercicio">
+
+            <option value="romberg">
+                Teste de Romberg
+            </option>
+
+            <option value="unipodal">
+                Apoio Unipodal
+            </option>
+
+            <option value="marcha">
+                Marcha Estacionária
+            </option>
+
+            <option value="berg">
+                Escala de Berg
+            </option>
+
+        </select>
+
+        <br><br>
+
+        <button type="submit">
+            Enviar Exercício
+        </button>
+
+    </form>
+
+    <script src="pacientes.js"></script>
+
+</body>
+
+</html>

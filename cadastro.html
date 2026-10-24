@@ -1,109 +1,80 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
-
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Motion Track - Cadastro</title>
-
-<link rel="stylesheet" href="estilo.css"/>
-
+    <meta charset="UTF-8">
+    <title>Motion Track - Cadastro</title>
 </head>
 
 <body>
 
-<div class="container">
+    <h1>Motion Track</h1>
 
-<div class="logo">
+    <h2>Cadastro</h2>
 
-<h1>Motion Track</h1>
+    <form id="cadastroForm">
 
-<p>Cadastro</p>
+        <label>Nome</label>
+        <br>
+        <input
+            type="text"
+            id="nome"
+            required
+        >
 
-</div>
+        <br><br>
 
-<form id="cadastroForm">
+        <label>Email</label>
+        <br>
+        <input
+            type="email"
+            id="emailCadastro"
+            required
+        >
 
-<div class="input-group">
+        <br><br>
 
-<label>Nome Completo</label>
+        <label>Senha</label>
+        <br>
+        <input
+            type="password"
+            id="senhaCadastro"
+            required
+        >
 
-<input
-type="text"
-id="nome"
-required
->
+        <br><br>
 
-</div>
+        <label>Tipo de Usuário</label>
+        <br>
 
-<div class="input-group">
+        <select id="tipoUsuario">
 
-<label>Email</label>
+            <option value="profissional">
+                Profissional
+            </option>
 
-<input
-type="email"
-id="emailCadastro"
-required
->
+            <option value="paciente">
+                Paciente
+            </option>
 
-</div>
+        </select>
 
-<div class="input-group">
+        <br><br>
 
-<label>Senha</label>
+        <button type="submit">
+            Cadastrar
+        </button>
 
-<input
-type="password"
-id="senhaCadastro"
-required
->
+    </form>
 
-</div>
+    <br>
 
-<div class="input-group">
+    <a href="login.html">
+        Voltar para Login
+    </a>
 
-<label>Tipo de Usuário</label>
-
-<select id="tipoUsuario">
-
-<option value="profissional">
-
-Profissional de Saúde
-
-</option>
-
-<option value="paciente">
-
-Paciente
-
-</option>
-
-</select>
-
-</div>
-
-<button type="submit">
-
-Cadastrar
-
-</button>
-
-</form>
-
-<div class="link">
-
-<a href="login.html">
-
-Voltar ao Login
-
-</a>
-
-</div>
-
-</div>
-
-<script src="js/auth.js"></script>
+    <script src="auth.js"></script>
 
 </body>
+
 </html>
