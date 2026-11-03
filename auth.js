@@ -1,99 +1,157 @@
-console.log("AUTH CARREGADO");
+import { auth, db } from "./firebase.js";
+
+import {
+    createUserWithEmailAndPassword,
+    signInWithEmailAndPassword
+}
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+import {
+    doc,
+    setDoc,
+    getDoc
+}
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
 const cadastroForm =
-document.getElementById("cadastroForm");
+document.getElementById(
+"cadastroForm"
+);
 
 if(cadastroForm){
 
-    cadastroForm.addEventListener(
-        "submit",
-        function(e){
+cadastroForm.addEventListener(
+"submit",
+async (e)=>{
 
-            e.preventDefault();
+e.preventDefault();
 
-            const usuario = {
+const nome =
+document.getElementById(
+"nome"
+).value;
 
-                nome:
-                document.getElementById("nome").value,
+const email =
+document.getElementById(
+"emailCadastro"
+).value;
 
-                email:
-                document.getElementById("emailCadastro").value,
+const senha =
+document.getElementById(
+"senhaCadastro"
+).value;
 
-                senha:
-                document.getElementById("senhaCadastro").value,
+const tipo =
+document.getElementById(
+"tipoUsuario"
+).value;
 
-                tipo:
-                document.getElementById("tipoUsuario").value
+try{
 
-            };
+const credencial =
+await createUserWithEmailAndPassword(
+auth,
+email,
+senha
+);
 
-            localStorage.setItem(
-                usuario.email,
-                JSON.stringify(usuario)
-            );
+await setDoc(
+doc(
+db,
+"usuarios",
+credencial.user.uid
+),
+{
+nome,
+email,
+tipo
+}
+);
 
-            alert("Conta criada com sucesso!");
+alert(
+"Cadastro realizado!"
+);
 
-            window.location.href =
-            "login.html";
+window.location.href =
+"login.html";
 
-        }
-    );
+}catch(erro){
+
+alert(
+erro.message
+);
 
 }
 
+});
+}
+
 const loginForm =
-document.getElementById("loginForm");
+document.getElementById(
+"loginForm"
+);
 
 if(loginForm){
 
-    loginForm.addEventListener(
-        "submit",
-        function(e){
+loginForm.addEventListener(
+"submit",
+async (e)=>{
 
-            e.preventDefault();
+e.preventDefault();
 
-            const email =
-            document.getElementById("email").value;
+const email =
+document.getElementById(
+"email"
+).value;
 
-            const senha =
-            document.getElementById("senha").value;
+const senha =
+document.getElementById(
+"senha"
+).value;
 
-            const usuario = JSON.parse(
-                localStorage.getItem(email)
-            );
+try{
 
-            if(!usuario){
+const credencial =
+await signInWithEmailAndPassword(
+auth,
+email,
+senha
+);
 
-                alert("Usuário não encontrado");
-                return;
+const docRef =
+await getDoc(
+doc(
+db,
+"usuarios",
+credencial.user.uid
+)
+);
 
-            }
+const usuario =
+docRef.data();
 
-            if(usuario.senha !== senha){
+if(
+usuario.tipo ===
+"profissional"
+){
 
-                alert("Senha incorreta");
-                return;
+window.location.href =
+"dashboard-profissional.html";
 
-            }
+}else{
 
-            localStorage.setItem(
-                "usuarioLogado",
-                JSON.stringify(usuario)
-            );
+window.location.href =
+"dashboard-paciente.html";
 
-            if(usuario.tipo === "profissional"){
+}
 
-                window.location.href =
-                "dashboard-profissional.html";
+}catch(erro){
 
-            }else{
+alert(
+"Login inválido"
+);
 
-                window.location.href =
-                "dashboard-paciente.html";
+}
 
-            }
-
-        }
-    );
-
+});
 }

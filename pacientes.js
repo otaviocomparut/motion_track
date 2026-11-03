@@ -1,51 +1,42 @@
-const usuario =
-JSON.parse(
-localStorage.getItem(
-"usuarioLogado"
-));
+import { db } from "./firebase.js";
 
-if(usuario){
+import {
+    collection,
+    addDoc,
+    getDocs
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-    const nomeProfissional =
-    document.getElementById(
-    "nomeProfissional"
-    );
 
-    if(nomeProfissional){
+// ============================
+// CARREGAR PACIENTES NA LISTA
+// ============================
 
-        nomeProfissional.innerText =
-        usuario.nome;
-
-    }
-
-}
-
-function carregarPacientes(){
+async function carregarPacientes() {
 
     const lista =
-    document.getElementById(
-    "listaPacientes"
-    );
+        document.getElementById("listaPacientes");
 
-    if(!lista) return;
+    if (!lista) return;
 
     lista.innerHTML = "";
 
-    const pacientes =
-    JSON.parse(
-    localStorage.getItem(
-    "pacientes"
-    )) || [];
+    const snapshot =
+        await getDocs(
+            collection(db, "pacientes")
+        );
 
-    pacientes.forEach((paciente)=>{
+    snapshot.forEach((documento) => {
+
+        const paciente =
+            documento.data();
 
         const li =
-        document.createElement("li");
+            document.createElement("li");
 
         li.innerText =
-        paciente.nome +
-        " - " +
-        paciente.email;
+            paciente.nome +
+            " - " +
+            paciente.email;
 
         lista.appendChild(li);
 
@@ -53,154 +44,170 @@ function carregarPacientes(){
 
 }
 
-const formPaciente =
-document.getElementById(
-"formPaciente"
-);
 
-if(formPaciente){
+// ============================
+// CARREGAR PACIENTES NO SELECT
+// ============================
 
-    formPaciente.addEventListener(
-        "submit",
-        function(e){
-
-            e.preventDefault();
-
-            const paciente = {
-
-                id: Date.now(),
-
-                nome:
-                document.getElementById(
-                "nomePaciente"
-                ).value,
-
-                email:
-                document.getElementById(
-                "emailPaciente"
-                ).value
-
-            };
-
-            let pacientes =
-            JSON.parse(
-            localStorage.getItem(
-            "pacientes"
-            )) || [];
-
-            pacientes.push(
-            paciente
-            );
-
-            localStorage.setItem(
-                "pacientes",
-                JSON.stringify(
-                pacientes
-                )
-            );
-
-            carregarPacientes();
-            carregarSelect();
-
-            formPaciente.reset();
-
-        }
-    );
-
-}
-
-function carregarSelect(){
+async function carregarSelect() {
 
     const select =
-    document.getElementById(
-    "pacienteSelecionado"
-    );
+        document.getElementById(
+            "pacienteSelecionado"
+        );
 
-    if(!select) return;
+    if (!select) return;
 
     select.innerHTML = "";
 
-    const pacientes =
-    JSON.parse(
-    localStorage.getItem(
-    "pacientes"
-    )) || [];
-
-    pacientes.forEach((paciente)=>{
-
-        let option =
-        document.createElement(
-        "option"
+    const snapshot =
+        await getDocs(
+            collection(db, "pacientes")
         );
+
+    snapshot.forEach((documento) => {
+
+        const paciente =
+            documento.data();
+
+        const option =
+            document.createElement("option");
 
         option.value =
-        paciente.email;
+            paciente.email;
 
         option.textContent =
-        paciente.nome;
+            paciente.nome;
 
-        select.appendChild(
-        option
-        );
+        select.appendChild(option);
 
     });
 
 }
 
-const formExercicio =
-document.getElementById(
-"formExercicio"
-);
 
-if(formExercicio){
+// ============================
+// CADASTRAR PACIENTE
+// ============================
 
-    formExercicio.addEventListener(
+const formPaciente =
+    document.getElementById("formPaciente");
+
+if (formPaciente) {
+
+    formPaciente.addEventListener(
         "submit",
-        function(e){
+        async (e) => {
 
             e.preventDefault();
 
-            const exercicio = {
-
-                paciente:
+            const nome =
                 document.getElementById(
-                "pacienteSelecionado"
-                ).value,
+                    "nomePaciente"
+                ).value;
 
-                tipo:
+            const email =
                 document.getElementById(
-                "tipoExercicio"
-                ).value,
+                    "emailPaciente"
+                ).value;
 
-                status:
-                "pendente"
+            try {
 
-            };
+                await addDoc(
+                    collection(db, "pacientes"),
+                    {
+                        nome,
+                        email
+                    }
+                );
 
-            let exercicios =
-            JSON.parse(
-            localStorage.getItem(
-            "exercicios"
-            )) || [];
+                alert(
+                    "Paciente cadastrado!"
+                );
 
-            exercicios.push(
-            exercicio
-            );
+                formPaciente.reset();
 
-            localStorage.setItem(
-                "exercicios",
-                JSON.stringify(
-                exercicios
-            ));
+                await carregarPacientes();
+                await carregarSelect();
 
-            alert(
-            "Exercício enviado!"
-            );
+            } catch (erro) {
+
+                console.error(erro);
+
+                alert(
+                    "Erro ao cadastrar paciente"
+                );
+
+            }
 
         }
     );
 
 }
+
+
+// ============================
+// CRIAR EXERCÍCIO
+// ============================
+
+const formExercicio =
+    document.getElementById(
+        "formExercicio"
+    );
+
+if (formExercicio) {
+
+    formExercicio.addEventListener(
+        "submit",
+        async (e) => {
+
+            e.preventDefault();
+
+            const pacienteEmail =
+                document.getElementById(
+                    "pacienteSelecionado"
+                ).value;
+
+            const tipo =
+                document.getElementById(
+                    "tipoExercicio"
+                ).value;
+
+            try {
+
+                await addDoc(
+                    collection(db, "exercicios"),
+                    {
+                        pacienteEmail,
+                        tipo,
+                        status: "pendente",
+                        dataCriacao: new Date()
+                    }
+                );
+
+                alert(
+                    "Exercício enviado!"
+                );
+
+            } catch (erro) {
+
+                console.error(erro);
+
+                alert(
+                    "Erro ao criar exercício"
+                );
+
+            }
+
+        }
+    );
+
+}
+
+
+// ============================
+// INICIALIZAÇÃO
+// ============================
 
 carregarPacientes();
 carregarSelect();

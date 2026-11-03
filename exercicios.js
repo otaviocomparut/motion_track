@@ -1,18 +1,29 @@
-const usuarioPaciente =
-JSON.parse(
-localStorage.getItem(
-"usuarioLogado"
-));
+import { db } from "./firebase.js";
 
-if(usuarioPaciente){
+import {
+collection,
+query,
+where,
+getDocs
+}
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-    const nome =
-    document.getElementById(
-    "nomePacienteLogado"
-    );
+import {
+getAuth
+}
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
-    nome.innerText =
-    usuarioPaciente.nome;
+const auth = getAuth();
+
+auth.onAuthStateChanged(
+async (user)=>{
+
+if(!user){
+
+window.location.href =
+"login.html";
+
+return;
 
 }
 
@@ -21,38 +32,44 @@ document.getElementById(
 "listaExercicios"
 );
 
-const exercicios =
-JSON.parse(
-localStorage.getItem(
+const consulta =
+query(
+collection(
+db,
 "exercicios"
-)) || [];
+),
+where(
+"pacienteEmail",
+"==",
+user.email
+)
+);
 
-if(lista && usuarioPaciente){
+const snapshot =
+await getDocs(
+consulta
+);
 
-    const meusExercicios =
-    exercicios.filter((ex)=>{
+lista.innerHTML = "";
 
-        return ex.paciente ===
-        usuarioPaciente.email;
+snapshot.forEach(
+(doc)=>{
 
-    });
+const exercicio =
+doc.data();
 
-    meusExercicios.forEach((ex)=>{
+const li =
+document.createElement(
+"li"
+);
 
-        const li =
-        document.createElement(
-        "li"
-        );
+li.innerText =
+`${exercicio.tipo} - ${exercicio.status}`;
 
-        li.innerText =
-        ex.tipo +
-        " - " +
-        ex.status;
+lista.appendChild(
+li
+);
 
-        lista.appendChild(
-        li
-        );
+});
 
-    });
-
-}
+});
