@@ -8,37 +8,46 @@ import {
 
 
 // ============================
-// CARREGAR PACIENTES NA LISTA
+// CARREGAR PACIENTES
 // ============================
 
 async function carregarPacientes() {
 
     const lista =
-        document.getElementById("listaPacientes");
+    document.getElementById(
+        "listaPacientes"
+    );
 
     if (!lista) return;
 
     lista.innerHTML = "";
 
     const snapshot =
-        await getDocs(
-            collection(db, "pacientes")
-        );
+    await getDocs(
+        collection(
+            db,
+            "pacientes"
+        )
+    );
 
     snapshot.forEach((documento) => {
 
         const paciente =
-            documento.data();
+        documento.data();
 
         const li =
-            document.createElement("li");
+        document.createElement(
+            "li"
+        );
 
         li.innerText =
-            paciente.nome +
-            " - " +
-            paciente.email;
+        paciente.nome +
+        " - " +
+        paciente.email;
 
-        lista.appendChild(li);
+        lista.appendChild(
+            li
+        );
 
     });
 
@@ -46,40 +55,47 @@ async function carregarPacientes() {
 
 
 // ============================
-// CARREGAR PACIENTES NO SELECT
+// CARREGAR SELECT
 // ============================
 
 async function carregarSelect() {
 
     const select =
-        document.getElementById(
-            "pacienteSelecionado"
-        );
+    document.getElementById(
+        "pacienteSelecionado"
+    );
 
     if (!select) return;
 
     select.innerHTML = "";
 
     const snapshot =
-        await getDocs(
-            collection(db, "pacientes")
-        );
+    await getDocs(
+        collection(
+            db,
+            "pacientes"
+        )
+    );
 
     snapshot.forEach((documento) => {
 
         const paciente =
-            documento.data();
+        documento.data();
 
         const option =
-            document.createElement("option");
+        document.createElement(
+            "option"
+        );
 
         option.value =
-            paciente.email;
+        paciente.email;
 
         option.textContent =
-            paciente.nome;
+        paciente.nome;
 
-        select.appendChild(option);
+        select.appendChild(
+            option
+        );
 
     });
 
@@ -91,7 +107,9 @@ async function carregarSelect() {
 // ============================
 
 const formPaciente =
-    document.getElementById("formPaciente");
+document.getElementById(
+    "formPaciente"
+);
 
 if (formPaciente) {
 
@@ -102,19 +120,22 @@ if (formPaciente) {
             e.preventDefault();
 
             const nome =
-                document.getElementById(
-                    "nomePaciente"
-                ).value;
+            document.getElementById(
+                "nomePaciente"
+            ).value;
 
             const email =
-                document.getElementById(
-                    "emailPaciente"
-                ).value;
+            document.getElementById(
+                "emailPaciente"
+            ).value;
 
             try {
 
                 await addDoc(
-                    collection(db, "pacientes"),
+                    collection(
+                        db,
+                        "pacientes"
+                    ),
                     {
                         nome,
                         email
@@ -132,7 +153,9 @@ if (formPaciente) {
 
             } catch (erro) {
 
-                console.error(erro);
+                console.error(
+                    erro
+                );
 
                 alert(
                     "Erro ao cadastrar paciente"
@@ -151,9 +174,9 @@ if (formPaciente) {
 // ============================
 
 const formExercicio =
-    document.getElementById(
-        "formExercicio"
-    );
+document.getElementById(
+    "formExercicio"
+);
 
 if (formExercicio) {
 
@@ -164,24 +187,30 @@ if (formExercicio) {
             e.preventDefault();
 
             const pacienteEmail =
-                document.getElementById(
-                    "pacienteSelecionado"
-                ).value;
+            document.getElementById(
+                "pacienteSelecionado"
+            ).value;
 
             const tipo =
-                document.getElementById(
-                    "tipoExercicio"
-                ).value;
+            document.getElementById(
+                "tipoExercicio"
+            ).value;
 
             try {
 
                 await addDoc(
-                    collection(db, "exercicios"),
+                    collection(
+                        db,
+                        "exercicios"
+                    ),
                     {
                         pacienteEmail,
                         tipo,
-                        status: "pendente",
-                        dataCriacao: new Date()
+                        status:
+                        "pendente",
+
+                        dataCriacao:
+                        new Date()
                     }
                 );
 
@@ -191,7 +220,9 @@ if (formExercicio) {
 
             } catch (erro) {
 
-                console.error(erro);
+                console.error(
+                    erro
+                );
 
                 alert(
                     "Erro ao criar exercício"
@@ -206,8 +237,73 @@ if (formExercicio) {
 
 
 // ============================
+// CARREGAR VIDEOS
+// ============================
+
+async function carregarVideos() {
+
+    const lista =
+    document.getElementById(
+        "listaVideos"
+    );
+
+    if (!lista) return;
+
+    lista.innerHTML = "";
+
+    const snapshot =
+    await getDocs(
+        collection(
+            db,
+            "videos"
+        )
+    );
+
+    snapshot.forEach((documento) => {
+
+        const video =
+        documento.data();
+
+        const li =
+        document.createElement(
+            "li"
+        );
+
+        li.innerHTML = `
+            <strong>Paciente:</strong>
+            ${video.pacienteEmail}
+
+            <br>
+
+            <strong>Exercício:</strong>
+            ${video.tipoExercicio}
+
+            <br>
+
+            <a
+                href="${video.videoUrl}"
+                target="_blank">
+
+                Assistir Vídeo
+
+            </a>
+
+            <br><br>
+        `;
+
+        lista.appendChild(
+            li
+        );
+
+    });
+
+}
+
+
+// ============================
 // INICIALIZAÇÃO
 // ============================
 
 carregarPacientes();
 carregarSelect();
+carregarVideos();

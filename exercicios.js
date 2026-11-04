@@ -63,9 +63,14 @@ document.createElement(
 "li"
 );
 
-li.innerText =
-`${exercicio.tipo} - ${exercicio.status}`;
+li.innerHTML = `
+    ${exercicio.tipo} - ${exercicio.status}
 
+    <button
+        onclick="abrirUpload('${exercicio.tipo}')">
+        Enviar Vídeo
+    </button>
+`;
 lista.appendChild(
 li
 );
@@ -73,3 +78,10 @@ li
 });
 
 });
+window.abrirUpload =
+function(tipoExercicio){
+
+    window.location.href =
+    `upload-video.html?exercicio=${tipoExercicio}`;
+
+};
