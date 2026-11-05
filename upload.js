@@ -2,8 +2,14 @@ import { db } from "./firebase.js";
 
 import {
     collection,
-    addDoc
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+    addDoc,
+    getDocs,
+    query,
+    where,
+    updateDoc
+}
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
 
 import {
     getAuth
@@ -108,6 +114,40 @@ document
                 new Date()
             }
         );
+        const consulta =
+query(
+    collection(
+        db,
+        "exercicios"
+    ),
+    where(
+        "pacienteEmail",
+        "==",
+        usuario.email
+    ),
+    where(
+        "tipo",
+        "==",
+        exercicio
+    )
+);
+
+const exercicios =
+await getDocs(
+    consulta
+);
+
+for(const documento of exercicios.docs){
+
+    await updateDoc(
+        documento.ref,
+        {
+            status:
+            "enviado"
+        }
+    );
+
+}
 
         console.log(
             "VIDEO SALVO"

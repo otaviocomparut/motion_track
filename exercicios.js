@@ -1,83 +1,124 @@
 import { db } from "./firebase.js";
 
 import {
-collection,
-query,
-where,
-getDocs
-}
-from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+    collection,
+    query,
+    where,
+    getDocs
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 import {
-getAuth
-}
-from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+    getAuth,
+    onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
 const auth = getAuth();
 
-auth.onAuthStateChanged(
-async (user)=>{
+onAuthStateChanged(
+    auth,
+    async (user) => {
 
-if(!user){
+        if (!user) {
 
-window.location.href =
-"login.html";
+            window.location.href =
+            "login.html";
 
-return;
+            return;
+        }
 
-}
+        const lista =
+        document.getElementById(
+            "listaExercicios"
+        );
 
-const lista =
-document.getElementById(
-"listaExercicios"
+        const consulta =
+        query(
+            collection(
+                db,
+                "exercicios"
+            ),
+            where(
+                "pacienteEmail",
+                "==",
+                user.email
+            )
+        );
+
+        const snapshot =
+        await getDocs(
+            consulta
+        );
+
+        lista.innerHTML = "";
+
+        snapshot.forEach(
+            (documento) => {
+
+                const exercicio =
+                documento.data();
+
+                const li =
+                document.createElement(
+                    "li"
+                );
+
+                if (
+                    exercicio.status ===
+                    "pendente"
+                ) {
+
+                    li.innerHTML = `
+                        🟡 ${exercicio.tipo} - pendente
+
+                        <button
+                            onclick="abrirUpload('${exercicio.tipo}')">
+
+                            Enviar Vídeo
+
+                        </button>
+                    `;
+
+                }
+                else if (
+                    exercicio.status ===
+                    "enviado"
+                ) {
+
+                    li.innerHTML = `
+                        🔵 ${exercicio.tipo} - enviado
+
+                        <br>
+
+                        Aguardando avaliação
+                    `;
+
+                }
+                else if (
+                    exercicio.status ===
+                    "concluido"
+                ) {
+
+                    li.innerHTML = `
+                        🟢 ${exercicio.tipo} - concluido
+
+                        <br>
+
+                        Exercício finalizado
+                    `;
+
+                }
+
+                lista.appendChild(
+                    li
+                );
+
+            }
+        );
+
+    }
 );
 
-const consulta =
-query(
-collection(
-db,
-"exercicios"
-),
-where(
-"pacienteEmail",
-"==",
-user.email
-)
-);
 
-const snapshot =
-await getDocs(
-consulta
-);
-
-lista.innerHTML = "";
-
-snapshot.forEach(
-(doc)=>{
-
-const exercicio =
-doc.data();
-
-const li =
-document.createElement(
-"li"
-);
-
-li.innerHTML = `
-    ${exercicio.tipo} - ${exercicio.status}
-
-    <button
-        onclick="abrirUpload('${exercicio.tipo}')">
-        Enviar Vídeo
-    </button>
-`;
-lista.appendChild(
-li
-);
-
-});
-
-});
 window.abrirUpload =
 function(tipoExercicio){
 
