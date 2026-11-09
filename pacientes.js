@@ -326,13 +326,12 @@ async function carregarVideos() {
 
             <br>
 
-            <a
-                href="${video.videoUrl}"
-                target="_blank">
+           <a
+    href="analise-video.html?video=${encodeURIComponent(video.videoUrl)}">
 
-                Assistir Vídeo
+    Analisar
 
-            </a>
+</a>
 
             <br><br>
         `;

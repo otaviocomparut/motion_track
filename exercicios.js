@@ -125,4 +125,4 @@ function(tipoExercicio){
     window.location.href =
     `upload-video.html?exercicio=${tipoExercicio}`;
 
-};
+};  

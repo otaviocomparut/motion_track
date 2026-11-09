@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <title>Análise de Vídeo</title>
+
+    <style>
+
+        #container{
+
+            position:relative;
+            width:800px;
+            height:auto;
+
+        }
+
+        video,
+        canvas{
+
+            position:absolute;
+            top:0;
+            left:0;
+
+            width:800px;
+
+        }
+
+        #resultado{
+
+            margin-top:500px;
+
+            font-size:18px;
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <h1>Teste MediaPipe</h1>
+
+    <div id="container">
+
+        <video
+            id="video"
+            controls
+            crossorigin="anonymous">
+        </video>
+
+        <canvas id="canvas"></canvas>
+
+    </div>
+
+    <div id="resultado"></div>
+
+    <script
+        type="module"
+        src="analise-video.js">
+    </script>
+
+</body>
+
+</html>
