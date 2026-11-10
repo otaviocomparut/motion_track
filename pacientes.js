@@ -327,7 +327,7 @@ async function carregarVideos() {
             <br>
 
            <a
-    href="analise-video.html?video=${encodeURIComponent(video.videoUrl)}">
+    href="analise-video.html?video=${encodeURIComponent(video.videoUrl)}&tipo=${video.tipoExercicio}">
 
     Analisar
 

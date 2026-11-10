@@ -1,3 +1,12 @@
+let tempoUnipodal =
+0;
+
+let iniciouUnipodal =
+false;
+
+let inicioUnipodal =
+0;
+
 import { db } from "./firebase.js";
 
 import {
@@ -43,6 +52,30 @@ const urlVideo =
 parametros.get(
     "video"
 );
+
+let tipoExercicio =
+parametros.get(
+    "tipo"
+);
+
+if(!tipoExercicio){
+
+    tipoExercicio =
+    "romberg";
+
+}
+
+const tipoFinal =
+tipoExercicio || "romberg";
+
+
+
+console.log(
+    "Tipo:",
+    tipoExercicio
+);
+
+if(tipoFinal === "romberg")
 
 if(!urlVideo){
 
@@ -109,15 +142,52 @@ async function analisar(){
 
     centrosX = [];
 
+    tempoUnipodal = 0;
+
+iniciouUnipodal = false;
+
+inicioUnipodal = 0;
+
+
     function frame(){
 
         if(video.ended){
 
-            calcularOscilacao();
+    if(
+        tipoExercicio ===
+        "romberg"
+    ){
 
-            return;
+        calcularOscilacao();
 
-        }
+    }
+   else if(
+    tipoExercicio ===
+    "unipodal"
+){
+
+    if(iniciouUnipodal){
+
+        tempoUnipodal =
+        (
+            performance.now() -
+            inicioUnipodal
+        ) / 1000;
+
+        iniciouUnipodal =
+        false;
+
+    }
+
+    salvarResultadoUnipodal();
+
+mostrarResultadoUnipodal();
+
+}
+
+    return;
+
+}
 
         if(video.paused){
 
@@ -149,21 +219,26 @@ async function analisar(){
             const pontos =
             resultado.landmarks[0];
 
-            const quadrilEsquerdo =
-            pontos[23];
+ if(
+    tipoExercicio ===
+    "romberg"
+){
 
-            const quadrilDireito =
-            pontos[24];
+    analisarRomberg(
+        pontos
+    );
 
-            const centroX =
-            (
-                quadrilEsquerdo.x +
-                quadrilDireito.x
-            ) / 2;
+}
+else if(
+    tipoExercicio ===
+    "unipodal"
+){
 
-            centrosX.push(
-                centroX
-            );
+    analisarUnipodal(
+        pontos
+    );
+
+}
 
             pontos.forEach(
                 (ponto)=>{
@@ -202,6 +277,76 @@ async function analisar(){
 // =====================================
 // ROMBERG
 // =====================================
+
+function analisarRomberg(
+    pontos
+){
+
+    const quadrilEsquerdo =
+    pontos[23];
+
+    const quadrilDireito =
+    pontos[24];
+
+    const centroX =
+    (
+        quadrilEsquerdo.x +
+        quadrilDireito.x
+    ) / 2;
+
+    centrosX.push(
+        centroX
+    );
+
+}
+
+function analisarUnipodal(
+    pontos
+){
+
+    const tornozeloEsquerdo =
+    pontos[27];
+
+    const tornozeloDireito =
+    pontos[28];
+
+    const diferenca =
+    Math.abs(
+        tornozeloEsquerdo.y -
+        tornozeloDireito.y
+    );
+
+    if(diferenca > 0.10){
+
+        if(!iniciouUnipodal){
+
+            iniciouUnipodal =
+            true;
+
+            inicioUnipodal =
+            performance.now();
+
+        }
+
+    }
+    else{
+
+        if(iniciouUnipodal){
+
+            tempoUnipodal =
+            (
+                performance.now() -
+                inicioUnipodal
+            ) / 1000;
+
+            iniciouUnipodal =
+            false;
+
+        }
+
+    }
+
+}
 
 async function calcularOscilacao(){
 
@@ -263,18 +408,21 @@ await addDoc(
         "resultados"
     ),
     {
-        exercicio:
-        "romberg",
+    exercicio:
+    "romberg",
 
-        oscilacao,
+    oscilacao,
 
-        pontuacao,
+    pontuacao,
 
-        classificacao,
+    classificacao,
 
-        dataAnalise:
-        new Date()
-    }
+    tempoUnipodal,
+
+    dataAnalise:
+    new Date()
+}
+
 );
 
     mostrarResultado(
@@ -318,10 +466,117 @@ function mostrarResultado(
         </p>
 
         <p>
+            Tempo Unipodal:
+            ${tempoUnipodal.toFixed(1)} segundos
+        </p>
+
+        <p>
             Classificação:
             ${classificacao}
         </p>
 
     `;
+
+}
+function mostrarResultadoUnipodal(){
+
+    const resultado =
+    document.getElementById(
+        "resultado"
+    );
+
+    let classificacao = "";
+
+    if(tempoUnipodal >= 20){
+
+        classificacao =
+        "Excelente";
+
+    }
+    else if(tempoUnipodal >= 10){
+
+        classificacao =
+        "Boa";
+
+    }
+    else if(tempoUnipodal >= 5){
+
+        classificacao =
+        "Regular";
+
+    }
+    else{
+
+        classificacao =
+        "Instável";
+
+    }
+
+    resultado.innerHTML = `
+
+        <h2>
+            Resultado Unipodal
+        </h2>
+
+        <p>
+            Tempo:
+            ${tempoUnipodal.toFixed(1)}
+            segundos
+        </p>
+
+        <p>
+            Classificação:
+            ${classificacao}
+        </p>
+
+    `;
+
+}
+async function salvarResultadoUnipodal(){
+
+    let classificacao = "";
+
+    if(tempoUnipodal >= 20){
+
+        classificacao =
+        "Excelente";
+
+    }
+    else if(tempoUnipodal >= 10){
+
+        classificacao =
+        "Boa";
+
+    }
+    else if(tempoUnipodal >= 5){
+
+        classificacao =
+        "Regular";
+
+    }
+    else{
+
+        classificacao =
+        "Instável";
+
+    }
+
+    await addDoc(
+        collection(
+            db,
+            "resultados"
+        ),
+        {
+            exercicio:
+            "unipodal",
+
+            tempoUnipodal,
+
+            classificacao,
+
+            dataAnalise:
+            new Date()
+        }
+    );
 
 }
