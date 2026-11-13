@@ -73,7 +73,7 @@ tipoExercicio || "romberg";
 console.log(
     "Tipo:",
     tipoExercicio
-);
+);  
 
 if(tipoFinal === "romberg")
 
