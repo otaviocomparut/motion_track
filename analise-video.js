@@ -1,11 +1,12 @@
-let tempoUnipodal =
-0;
+import {
+    analisarRomberg
+}
+from "./analises/romberg.js";
 
-let iniciouUnipodal =
-false;
-
-let inicioUnipodal =
-0;
+import {
+    analisarUnipodal
+}
+from "./analises/unipodal.js";
 
 import { db } from "./firebase.js";
 
@@ -38,6 +39,11 @@ canvas.getContext(
 
 let centrosX = [];
 
+let tempoUnipodal = 0;
+
+let iniciouUnipodal = false;
+
+let inicioUnipodal = 0;
 
 // =====================================
 // RECEBER URL DO VIDEO
@@ -64,18 +70,10 @@ if(!tipoExercicio){
     "romberg";
 
 }
-
-const tipoFinal =
-tipoExercicio || "romberg";
-
-
-
 console.log(
     "Tipo:",
     tipoExercicio
 );  
-
-if(tipoFinal === "romberg")
 
 if(!urlVideo){
 
@@ -270,81 +268,6 @@ else if(
     }
 
     frame();
-
-}
-
-
-// =====================================
-// ROMBERG
-// =====================================
-
-function analisarRomberg(
-    pontos
-){
-
-    const quadrilEsquerdo =
-    pontos[23];
-
-    const quadrilDireito =
-    pontos[24];
-
-    const centroX =
-    (
-        quadrilEsquerdo.x +
-        quadrilDireito.x
-    ) / 2;
-
-    centrosX.push(
-        centroX
-    );
-
-}
-
-function analisarUnipodal(
-    pontos
-){
-
-    const tornozeloEsquerdo =
-    pontos[27];
-
-    const tornozeloDireito =
-    pontos[28];
-
-    const diferenca =
-    Math.abs(
-        tornozeloEsquerdo.y -
-        tornozeloDireito.y
-    );
-
-    if(diferenca > 0.10){
-
-        if(!iniciouUnipodal){
-
-            iniciouUnipodal =
-            true;
-
-            inicioUnipodal =
-            performance.now();
-
-        }
-
-    }
-    else{
-
-        if(iniciouUnipodal){
-
-            tempoUnipodal =
-            (
-                performance.now() -
-                inicioUnipodal
-            ) / 1000;
-
-            iniciouUnipodal =
-            false;
-
-        }
-
-    }
 
 }
 
