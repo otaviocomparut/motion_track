@@ -458,11 +458,6 @@ function mostrarResultado(
         </p>
 
         <p>
-            Tempo Unipodal:
-            ${tempoUnipodal.toFixed(1)} segundos
-        </p>
-
-        <p>
             Classificação:
             ${classificacao}
         </p>
