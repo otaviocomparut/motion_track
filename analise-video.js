@@ -1,13 +1,3 @@
-import {
-    analisarRomberg
-}
-from "./analises/romberg.js";
-
-import {
-    analisarUnipodal
-}
-from "./analises/unipodal.js";
-
 import { db } from "./firebase.js";
 
 import {
@@ -125,6 +115,76 @@ await PoseLandmarker.createFromOptions(
 // ANALISAR VIDEO
 // =====================================
 
+function analisarRomberg(
+    pontos
+){
+
+    const quadrilEsquerdo =
+    pontos[23];
+
+    const quadrilDireito =
+    pontos[24];
+
+    const centroX =
+    (
+        quadrilEsquerdo.x +
+        quadrilDireito.x
+    ) / 2;
+
+    centrosX.push(
+        centroX
+    );
+
+}
+
+function analisarUnipodal(
+    pontos
+){
+
+    const tornozeloEsquerdo =
+    pontos[27];
+
+    const tornozeloDireito =
+    pontos[28];
+
+    const diferenca =
+    Math.abs(
+        tornozeloEsquerdo.y -
+        tornozeloDireito.y
+    );
+
+    if(diferenca > 0.10){
+
+        if(!iniciouUnipodal){
+
+            iniciouUnipodal =
+            true;
+
+            inicioUnipodal =
+            performance.now();
+
+        }
+
+    }
+    else{
+
+        if(iniciouUnipodal){
+
+            tempoUnipodal =
+            (
+                performance.now() -
+                inicioUnipodal
+            ) / 1000;
+
+            iniciouUnipodal =
+            false;
+
+        }
+
+    }
+
+}
+
 video.addEventListener(
     "play",
     analisar
@@ -149,7 +209,9 @@ inicioUnipodal = 0;
 
     function frame(){
 
-        if(video.ended){
+        if(video.ended)
+            
+            {console.log("VIDEO TERMINOU");
 
     if(
         tipoExercicio ===
@@ -273,6 +335,8 @@ else if(
 
 async function calcularOscilacao(){
 
+    console.log("CALCULANDO OSCILACAO");
+
     const maior =
     Math.max(
         ...centrosX
@@ -348,7 +412,12 @@ await addDoc(
 
 );
 
+console.log(
+    "MOSTRANDO RESULTADO"
+);
+
     mostrarResultado(
+        
         oscilacao,
         pontuacao,
         classificacao
