@@ -29,6 +29,10 @@ canvas.getContext(
 
 let centrosX = [];
 
+let contadorPassos = 0;
+
+let joelhoAlto = false;
+
 let tempoUnipodal = 0;
 
 let iniciouUnipodal = false;
@@ -190,6 +194,44 @@ video.addEventListener(
     analisar
 );
 
+function analisarMarcha(
+    pontos
+){
+
+    const joelhoEsquerdo =
+    pontos[25];
+
+    console.log(
+    "Joelho:",
+    pontos[25].y
+);
+
+    if(
+    joelhoEsquerdo.y < 0.60 &&
+    !joelhoAlto
+){
+
+        contadorPassos++;
+
+        console.log(
+    "PASSOS:",
+    contadorPassos
+);
+
+        joelhoAlto = true;
+
+    }
+
+    if(
+    joelhoEsquerdo.y > 0.70
+){
+
+        joelhoAlto = false;
+
+    }
+
+}
+
 async function analisar(){
 
     canvas.width =
@@ -206,132 +248,162 @@ iniciouUnipodal = false;
 
 inicioUnipodal = 0;
 
+contadorPassos = 0;
 
-    function frame(){
+joelhoAlto = false;
 
-        if(video.ended)
-            
-            {console.log("VIDEO TERMINOU");
+function frame(){
 
-    if(
-        tipoExercicio ===
-        "romberg"
-    ){
+    if(video.ended){
 
-        calcularOscilacao();
-
-    }
-   else if(
-    tipoExercicio ===
-    "unipodal"
-){
-
-    if(iniciouUnipodal){
-
-        tempoUnipodal =
-        (
-            performance.now() -
-            inicioUnipodal
-        ) / 1000;
-
-        iniciouUnipodal =
-        false;
-
-    }
-
-    salvarResultadoUnipodal();
-
-mostrarResultadoUnipodal();
-
-}
-
-    return;
-
-}
-
-        if(video.paused){
-
-            requestAnimationFrame(
-                frame
-            );
-
-            return;
-
-        }
-
-        const resultado =
-        poseLandmarker.detectForVideo(
-            video,
-            performance.now()
-        );
-
-        ctx.clearRect(
-            0,
-            0,
-            canvas.width,
-            canvas.height
+        console.log(
+            "VIDEO TERMINOU"
         );
 
         if(
-            resultado.landmarks.length
+            tipoExercicio ===
+            "romberg"
         ){
 
-            const pontos =
-            resultado.landmarks[0];
-
- if(
-    tipoExercicio ===
-    "romberg"
-){
-
-    analisarRomberg(
-        pontos
-    );
-
-}
-else if(
-    tipoExercicio ===
-    "unipodal"
-){
-
-    analisarUnipodal(
-        pontos
-    );
-
-}
-
-            pontos.forEach(
-                (ponto)=>{
-
-                    ctx.beginPath();
-
-                    ctx.arc(
-                        ponto.x * canvas.width,
-                        ponto.y * canvas.height,
-                        4,
-                        0,
-                        Math.PI * 2
-                    );
-
-                    ctx.fillStyle =
-                    "red";
-
-                    ctx.fill();
-
-                }
-            );
+            calcularOscilacao();
 
         }
+        else if(
+            tipoExercicio ===
+            "unipodal"
+        ){
+
+            if(iniciouUnipodal){
+
+                tempoUnipodal =
+                (
+                    performance.now() -
+                    inicioUnipodal
+                ) / 1000;
+
+                iniciouUnipodal =
+                false;
+
+            }
+
+            salvarResultadoUnipodal();
+
+            mostrarResultadoUnipodal();
+
+        }
+        else if(
+            tipoExercicio ===
+            "marcha"
+        ){
+
+            salvarResultadoMarcha();
+
+mostrarResultadoMarcha();
+
+        }
+
+        return;
+
+    }
+
+    if(video.paused){
 
         requestAnimationFrame(
             frame
         );
 
+        return;
+
     }
+
+    const resultado =
+    poseLandmarker.detectForVideo(
+        video,
+        performance.now()
+    );
+
+    ctx.clearRect(
+        0,
+        0,
+        canvas.width,
+        canvas.height
+    );
+
+    if(
+        resultado.landmarks.length
+    ){
+
+        const pontos =
+        resultado.landmarks[0];
+
+        if(
+            tipoExercicio ===
+            "romberg"
+        ){
+
+            analisarRomberg(
+                pontos
+            );
+
+        }
+        else if(
+            tipoExercicio ===
+            "unipodal"
+        ){
+
+            analisarUnipodal(
+                pontos
+            );
+
+        }
+        else if(
+            tipoExercicio ===
+            "marcha"
+        ){
+
+            analisarMarcha(
+                pontos
+            );
+
+        }
+
+        pontos.forEach(
+            (ponto)=>{
+
+                ctx.beginPath();
+
+                ctx.arc(
+                    ponto.x *
+                    canvas.width,
+
+                    ponto.y *
+                    canvas.height,
+
+                    4,
+
+                    0,
+
+                    Math.PI * 2
+                );
+
+                ctx.fillStyle =
+                "red";
+
+                ctx.fill();
+
+            }
+        );
+
+    }
+
+    requestAnimationFrame(
+        frame
+    );
+
+}
 
     frame();
 
-}
 
 async function calcularOscilacao(){
 
@@ -349,7 +421,7 @@ async function calcularOscilacao(){
 
     const oscilacao =
     maior - menor;
-
+}
     let pontuacao =
     0;
 
@@ -564,6 +636,113 @@ async function salvarResultadoUnipodal(){
             dataAnalise:
             new Date()
         }
+    );
+
+}
+function mostrarResultadoMarcha(){
+
+    let classificacao = "";
+
+    if(contadorPassos >= 20){
+
+        classificacao =
+        "Excelente";
+
+    }
+    else if(contadorPassos >= 15){
+
+        classificacao =
+        "Boa";
+
+    }
+    else if(contadorPassos >= 8){
+
+        classificacao =
+        "Regular";
+
+    }
+    else{
+
+        classificacao =
+        "Instável";
+
+    }
+
+    const resultado =
+    document.getElementById(
+        "resultado"
+    );
+
+    resultado.innerHTML = `
+
+        <h2>
+            Resultado Marcha
+        </h2>
+
+        <p>
+            Passos:
+            ${contadorPassos}
+        </p>
+
+        <p>
+            Classificação:
+            ${classificacao}
+        </p>
+
+    `;
+
+}
+async function salvarResultadoMarcha(){
+
+    let classificacao = "";
+
+    if(contadorPassos >= 20){
+
+        classificacao =
+        "Excelente";
+
+    }
+    else if(contadorPassos >= 15){
+
+        classificacao =
+        "Boa";
+
+    }
+    else if(contadorPassos >= 8){
+
+        classificacao =
+        "Regular";
+
+    }
+    else{
+
+        classificacao =
+        "Instável";
+
+    }
+
+    await addDoc(
+
+        collection(
+            db,
+            "resultados"
+        ),
+
+        {
+
+            exercicio:
+            "marcha",
+
+            passos:
+            contadorPassos,
+
+            classificacao,
+
+            dataAnalise:
+            new Date()
+
+        }
+
     );
 
 }
