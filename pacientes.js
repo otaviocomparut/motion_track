@@ -327,9 +327,16 @@ async function carregarVideos() {
             <br>
 
            <a
-    href="analise-video.html?video=${encodeURIComponent(video.videoUrl)}&tipo=${video.tipoExercicio}">
+    href="analise-video.html?video=${encodeURIComponent(video.videoUrl)}&tipo=${video.tipoExercicio}&pacienteEmail=${encodeURIComponent(video.pacienteEmail)}">
 
     Analisar
+
+    <a
+ href="berg.html?pacienteEmail=${encodeURIComponent(video.pacienteEmail)}">
+
+    Escala Berg
+
+</a>
 
 </a>
 

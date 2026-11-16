@@ -58,6 +58,16 @@ parametros.get(
     "tipo"
 );
 
+const pacienteEmail =
+parametros.get(
+    "pacienteEmail"
+);
+
+console.log(
+    "PACIENTE:",
+    pacienteEmail
+);
+
 if(!tipoExercicio){
 
     tipoExercicio =
@@ -467,6 +477,8 @@ await addDoc(
         "resultados"
     ),
     {
+    pacienteEmail,
+
     exercicio:
     "romberg",
 
@@ -594,11 +606,14 @@ function mostrarResultadoUnipodal(){
 async function salvarResultadoUnipodal(){
 
     let classificacao = "";
+    let pontuacao = 0;
 
     if(tempoUnipodal >= 20){
 
         classificacao =
         "Excelente";
+
+        pontuacao = 80;
 
     }
     else if(tempoUnipodal >= 10){
@@ -606,17 +621,23 @@ async function salvarResultadoUnipodal(){
         classificacao =
         "Boa";
 
+        pontuacao = 60;
+
     }
     else if(tempoUnipodal >= 5){
 
         classificacao =
         "Regular";
 
+        pontuacao = 40;
+
     }
     else{
 
         classificacao =
         "Instável";
+
+        pontuacao = 20;
 
     }
 
@@ -626,8 +647,12 @@ async function salvarResultadoUnipodal(){
             "resultados"
         ),
         {
-            exercicio:
-            "unipodal",
+    pacienteEmail,
+
+    exercicio:
+    "unipodal",
+
+            pontuacao,
 
             tempoUnipodal,
 
@@ -695,11 +720,14 @@ function mostrarResultadoMarcha(){
 async function salvarResultadoMarcha(){
 
     let classificacao = "";
+    let pontuacao = 0;
 
     if(contadorPassos >= 20){
 
         classificacao =
         "Excelente";
+
+        pontuacao = 80;
 
     }
     else if(contadorPassos >= 15){
@@ -707,17 +735,23 @@ async function salvarResultadoMarcha(){
         classificacao =
         "Boa";
 
+        pontuacao = 60;
+
     }
     else if(contadorPassos >= 8){
 
         classificacao =
         "Regular";
 
+        pontuacao = 40;
+
     }
     else{
 
         classificacao =
         "Instável";
+
+        pontuacao = 20;
 
     }
 
@@ -729,9 +763,12 @@ async function salvarResultadoMarcha(){
         ),
 
         {
+    pacienteEmail,
 
-            exercicio:
-            "marcha",
+    exercicio:
+    "marcha",
+
+            pontuacao,
 
             passos:
             contadorPassos,
