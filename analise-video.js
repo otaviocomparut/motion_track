@@ -1,5 +1,4 @@
 import { db } from "./firebase.js";
-
 import {
     collection,
     addDoc
@@ -55,7 +54,7 @@ parametros.get(
 
 let tipoExercicio =
 parametros.get(
-    "tipo"
+    "tipo"      
 );
 
 const pacienteEmail =
@@ -417,7 +416,9 @@ mostrarResultadoMarcha();
 
 async function calcularOscilacao(){
 
-    console.log("CALCULANDO OSCILACAO");
+    console.log(
+        "CALCULANDO OSCILACAO"
+    );
 
     const maior =
     Math.max(
@@ -431,7 +432,7 @@ async function calcularOscilacao(){
 
     const oscilacao =
     maior - menor;
-}
+
     let pontuacao =
     0;
 
@@ -441,6 +442,7 @@ async function calcularOscilacao(){
     if(oscilacao <= 0.03){
 
         pontuacao = 95;
+
         classificacao =
         "Excelente";
 
@@ -450,6 +452,7 @@ async function calcularOscilacao(){
     ){
 
         pontuacao = 80;
+
         classificacao =
         "Boa";
 
@@ -459,6 +462,7 @@ async function calcularOscilacao(){
     ){
 
         pontuacao = 60;
+
         classificacao =
         "Regular";
 
@@ -466,46 +470,48 @@ async function calcularOscilacao(){
     else{
 
         pontuacao = 40;
+
         classificacao =
         "Instável";
 
     }
 
-await addDoc(
-    collection(
-        db,
-        "resultados"
-    ),
-    {
-    pacienteEmail,
+    await addDoc(
+        collection(
+            db,
+            "resultados"
+        ),
+        {
 
-    exercicio:
-    "romberg",
+            pacienteEmail,
 
-    oscilacao,
+            exercicio:
+            "romberg",
 
-    pontuacao,
+            oscilacao,
 
-    classificacao,
+            pontuacao,
 
-    tempoUnipodal,
+            classificacao,
 
-    dataAnalise:
-    new Date()
-}
+            dataAnalise:
+            new Date()
 
-);
-
-console.log(
-    "MOSTRANDO RESULTADO"
-);
+        }
+    );
 
     mostrarResultado(
-        
+
         oscilacao,
+
         pontuacao,
+
         classificacao
+
     );
+
+}
+
 
 }
 
