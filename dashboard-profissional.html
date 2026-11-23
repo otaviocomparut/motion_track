@@ -4,103 +4,289 @@
 <head>
     <meta charset="UTF-8">
     <title>Dashboard Profissional</title>
+    <style>
+        
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+
+    background:#050505;
+
+    color:white;
+
+    font-family:
+    "Segoe UI",
+    sans-serif;
+
+}
+
+.header{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:20px;
+
+    padding:25px;
+
+    background:#111;
+
+    border-bottom:
+    2px solid #00ff66;
+
+}
+
+.logo{
+
+    width:70px;
+
+}
+
+.header h1{
+
+    color:#00ff66;
+
+}
+
+.header h2{
+
+    color:white;
+
+    font-size:18px;
+
+    font-weight:400;
+
+}
+
+.container{
+
+    max-width:1200px;
+
+    margin:auto;
+
+    padding:30px;
+
+}
+
+.card{
+
+    background:#181818;
+
+    padding:25px;
+
+    border-radius:16px;
+
+    margin-bottom:25px;
+
+    box-shadow:
+    0 0 15px rgba(0,255,100,.1);
+
+}
+
+.card h3{
+
+    color:#00ff66;
+
+    margin-bottom:20px;
+
+}
+
+input,
+select{
+
+    width:100%;
+
+    padding:12px;
+
+    margin-bottom:15px;
+
+    border:none;
+
+    border-radius:10px;
+
+    background:#2c2c2c;
+
+    color:white;
+
+}
+
+button{
+
+    background:#00ff66;
+
+    color:black;
+
+    border:none;
+
+    padding:12px 20px;
+
+    border-radius:10px;
+
+    font-weight:bold;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+}
+
+button:hover{
+
+    background:#00dd55;
+
+}
+
+ul{
+
+    list-style:none;
+
+}
+
+li{
+
+    background:#222;
+
+    padding:15px;
+
+    margin-bottom:10px;
+
+    border-radius:10px;
+
+}
+
+a{
+
+    color:#00ff66;
+
+}
+
+</style>
+    </style>
 </head>
 
 <body>
 
-    <h1>Painel do Profissional</h1>
+    <div class="header">
 
-    <h2 id="nomeProfissional"></h2>
+        <img
+            src="imagens do site e logos/logo.svg.png"
+            alt="Motion Track"
+            class="logo">
 
-    <hr>
+        <div>
 
-    <h3>Cadastrar Paciente</h3>
+            <h1>Motion Track</h1>
 
-    <form id="formPaciente">
+            <h2>Painel do Profissional</h2>
 
-        <input
-            type="text"
-            id="nomePaciente"
-            placeholder="Nome"
-            required>
+        </div>
 
-        <br><br>
+    </div>
 
-        <input
-            type="email"
-            id="emailPaciente"
-            placeholder="Email"
-            required>
+    <div class="container">
 
-        <br><br>
+        <div class="card">
 
-        <button type="submit">
-            Salvar Paciente
-        </button>
+            <h3>Cadastrar Paciente</h3>
 
-    </form>
+            <form id="formPaciente">
 
-    <hr>
+                <input
+                    type="text"
+                    id="nomePaciente"
+                    placeholder="Nome"
+                    required>
 
-    <h3>Pacientes</h3>
+                <input
+                    type="email"
+                    id="emailPaciente"
+                    placeholder="Email"
+                    required>
 
-    <ul id="listaPacientes"></ul>
+                <button type="submit">
+                    Salvar Paciente
+                </button>
 
-    <hr>
+            </form>
 
-    <h3>Criar Exercício</h3>
+        </div>
 
-    <form id="formExercicio">
+        <div class="card">
 
-        <select id="pacienteSelecionado"></select>
+            <h3>Pacientes</h3>
 
-        <br><br>
+            <ul id="listaPacientes"></ul>
 
-        <select id="tipoExercicio">
+        </div>
 
-            <option value="romberg">
-                Teste de Romberg
-            </option>
+        <div class="card">
 
-            <option value="unipodal">
-                Apoio Unipodal
-            </option>
+            <h3>Criar Exercício</h3>
 
-            <option value="marcha">
-                Marcha Estacionária
-            </option>
+            <form id="formExercicio">
 
-            <option value="berg">
-                Escala de Berg
-            </option>
+                <select id="pacienteSelecionado"></select>
 
-        </select>
+                <select id="tipoExercicio">
 
-        <br><br>
+                    <option value="romberg">
+                        Teste de Romberg
+                    </option>
 
-        <button type="submit">
-            Enviar Exercício
-        </button>
+                    <option value="unipodal">
+                        Apoio Unipodal
+                    </option>
 
-    </form>
+                    <option value="marcha">
+                        Marcha Estacionária
+                    </option>
 
-    <hr>
+                    <option value="berg">
+                        Escala Berg
+                    </option>
 
-   <h3>Vídeos Enviados</h3>
+                </select>
 
-<ul id="listaVideos"></ul>
+                <button type="submit">
+                    Enviar Exercício
+                </button>
 
-<hr>
+            </form>
 
-<h3>Perfil Clínico do Paciente</h3>
+        </div>
 
-<select id="pacientePerfil"></select>
+        <div class="card">
 
-<br><br>
+            <h3>Vídeos Enviados</h3>
 
-<div id="perfilPaciente"></div>
+            <ul id="listaVideos"></ul>
 
-    <script type="module" src="pacientes.js"></script>
+        </div>
+
+        <div class="card">
+
+            <h3>Perfil Clínico do Paciente</h3>
+
+            <select id="pacientePerfil"></select>
+
+            <br><br>
+
+            <div id="perfilPaciente"></div>
+
+        </div>
+
+    </div>
+
+    <script
+        type="module"
+        src="pacientes.js">
+    </script>
 
 </body>
 

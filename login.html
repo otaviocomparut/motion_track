@@ -2,51 +2,243 @@
 <html lang="pt-BR">
 
 <head>
+
     <meta charset="UTF-8">
-    <title>Motion Track - Login</title>
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+    <title>
+        Motion Track - Login
+    </title>
+
+    <style>
+
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+        }
+
+        body{
+
+            min-height:100vh;
+
+            display:flex;
+
+            justify-content:center;
+
+            align-items:center;
+
+            background:#0f0f0f;
+
+            font-family:
+            "Segoe UI",
+            sans-serif;
+
+            padding:20px;
+
+        }
+
+        .login-container{
+
+            width:100%;
+
+            max-width:400px;
+
+            background:#181818;
+
+            padding:40px;
+
+            border-radius:20px;
+
+            box-shadow:
+            0 0 25px rgba(0,255,100,.15);
+
+            text-align:center;
+
+        }
+
+        .logo{
+
+            width:90px;
+
+            display:block;
+
+            margin:0 auto 20px;
+
+        }
+
+        h1{
+
+            color:#00ff66;
+
+            margin-bottom:5px;
+
+        }
+
+        h2{
+
+            color:white;
+
+            margin-bottom:25px;
+
+        }
+
+        form{
+
+            display:flex;
+
+            flex-direction:column;
+
+        }
+
+        label{
+
+            text-align:left;
+
+            color:white;
+
+            margin-bottom:5px;
+
+        }
+
+        input{
+
+            width:100%;
+
+            padding:12px;
+
+            margin-bottom:15px;
+
+            border:none;
+
+            border-radius:10px;
+
+            background:#2a2a2a;
+
+            color:white;
+
+        }
+
+        input:focus{
+
+            outline:2px solid #00ff66;
+
+        }
+
+        button{
+
+            background:#00ff66;
+
+            color:black;
+
+            border:none;
+
+            border-radius:10px;
+
+            padding:14px;
+
+            font-weight:bold;
+
+            cursor:pointer;
+
+            transition:.3s;
+
+        }
+
+        button:hover{
+
+            background:#00dd55;
+
+            transform:translateY(-2px);
+
+        }
+
+        .criar-conta{
+
+            display:block;
+
+            margin-top:20px;
+
+            color:#00ff66;
+
+            text-decoration:none;
+
+            font-weight:bold;
+
+        }
+
+        .criar-conta:hover{
+
+            text-decoration:underline;
+
+        }
+
+    </style>
+
 </head>
 
 <body>
 
-    <h1>Motion Track</h1>
+    <div class="login-container">
 
-    <h2>Login</h2>
+        <img
+            src="imagens do site e logos/logo.svg.png"
+            alt="Motion Track"
+            class="logo">
 
-    <form id="loginForm">
+        <h1>
+            Motion Track
+        </h1>
 
-        <label>Email</label>
-        <br>
-        <input
-            type="email"
-            id="email"
-            required
-        >
+        <h2>
+            Login
+        </h2>
 
-        <br><br>
+        <form id="loginForm">
 
-        <label>Senha</label>
-        <br>
-        <input
-            type="password"
-            id="senha"
-            required
-        >
+            <label for="email">
+                Email
+            </label>
 
-        <br><br>
+            <input
+                type="email"
+                id="email"
+                required>
 
-        <button type="submit">
-            Entrar
-        </button>
+            <label for="senha">
+                Senha
+            </label>
 
-    </form>
+            <input
+                type="password"
+                id="senha"
+                required>
 
-    <br>
+            <button type="submit">
 
-    <a href="cadastro.html">
-        Criar Conta
-    </a>
+                Entrar
 
-    <script type="module" src="auth.js"></script>
+            </button>
+
+        </form>
+
+        <a
+            href="cadastro.html"
+            class="criar-conta">
+
+            Criar Conta
+
+        </a>
+
+    </div>
+
+    <script
+        type="module"
+        src="auth.js">
+    </script>
 
 </body>
 
