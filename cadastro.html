@@ -2,272 +2,78 @@
 <html lang="pt-BR">
 
 <head>
-
     <meta charset="UTF-8">
-
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
-
     <title>Motion Track - Cadastro</title>
-
-    <script type="module" src="auth.js"></script>
-
-    <style>
-
-        *{
-            margin:0;
-            padding:0;
-            box-sizing:border-box;
-        }
-
-        body{
-
-            min-height:100vh;
-
-            display:flex;
-
-            justify-content:center;
-
-            align-items:center;
-
-            background:#050505;
-
-            font-family:
-            "Segoe UI",
-            sans-serif;
-
-            padding:20px;
-
-        }
-
-        .cadastro-container{
-
-            width:100%;
-
-            max-width:420px;
-
-            background:#181818;
-
-            border-radius:20px;
-
-            padding:35px;
-
-            box-shadow:
-            0 0 20px rgba(0,255,100,.15);
-
-        }
-
-        .logo{
-
-            width:90px;
-
-            display:block;
-
-            margin:0 auto 20px;
-
-        }
-
-        h1{
-
-            text-align:center;
-
-            color:#00ff66;
-
-            font-size:2rem;
-
-            margin-bottom:5px;
-
-        }
-
-        h2{
-
-            text-align:center;
-
-            color:white;
-
-            font-size:1.4rem;
-
-            margin-bottom:30px;
-
-        }
-
-        form{
-
-            display:flex;
-
-            flex-direction:column;
-
-        }
-
-        label{
-
-            color:white;
-
-            margin-bottom:6px;
-
-            font-size:14px;
-
-        }
-
-        input,
-        select{
-
-            width:100%;
-
-            padding:12px;
-
-            margin-bottom:18px;
-
-            border:none;
-
-            border-radius:10px;
-
-            background:#2a2a2a;
-
-            color:white;
-
-            font-size:14px;
-
-        }
-
-        input:focus,
-        select:focus{
-
-            outline:2px solid #00ff66;
-
-        }
-
-        button{
-
-            width:100%;
-
-            border:none;
-
-            border-radius:10px;
-
-            padding:14px;
-
-            margin-top:10px;
-
-            background:#00ff66;
-
-            color:black;
-
-            font-weight:bold;
-
-            cursor:pointer;
-
-            transition:.3s;
-
-        }
-
-        button:hover{
-
-            background:#00dd55;
-
-            transform:translateY(-2px);
-
-        }
-
-        .login-link{
-
-            display:block;
-
-            text-align:center;
-
-            margin-top:20px;
-
-            color:#00ff66;
-
-            text-decoration:none;
-
-            font-weight:bold;
-
-        }
-
-        .login-link:hover{
-
-            text-decoration:underline;
-
-        }
-
-    </style>
-
 </head>
 
 <body>
 
-    <div class="cadastro-container">
+    <h1>Motion Track</h1>
 
-        <img
-            src="imagens do site e logos/logo.svg.png"
-            alt="Motion Track"
-            class="logo">
+    <h2>Cadastro</h2>
 
-        <h1>Motion Track</h1>
+    <form id="cadastroForm">
 
-        <h2>Criar Conta</h2>
+        <label>Nome</label>
+        <br>
+        <input
+            type="text"
+            id="nome"
+            required
+        >
 
-        <form id="cadastroForm">
+        <br><br>
 
-            <label for="nome">
-                Nome
-            </label>
+        <label>Email</label>
+        <br>
+        <input
+            type="email"
+            id="emailCadastro"
+            required
+        >
 
-            <input
-                type="text"
-                id="nome"
-                required>
+        <br><br>
 
-            <label for="emailCadastro">
-                Email
-            </label>
+        <label>Senha</label>
+        <br>
+        <input
+            type="password"
+            id="senhaCadastro"
+            required
+        >
 
-            <input
-                type="email"
-                id="emailCadastro"
-                required>
+        <br><br>
 
-            <label for="senhaCadastro">
-                Senha
-            </label>
+        <label>Tipo de Usuário</label>
+        <br>
 
-            <input
-                type="password"
-                id="senhaCadastro"
-                required>
+        <select id="tipoUsuario">
 
-            <label for="tipoUsuario">
-    Tipo de Usuário
-</label>
+            <option value="profissional">
+                Profissional
+            </option>
 
-<select id="tipoUsuario">
+            <option value="paciente">
+                Paciente
+            </option>
 
-    <option value="profissional">
-        Profissional
-    </option>
+        </select>
 
-    <option value="paciente">
-        Paciente
-    </option>
+        <br><br>
 
-</select>
+        <button type="submit">
+            Cadastrar
+        </button>
 
-            <button type="submit">
-                Cadastrar
-            </button>
+    </form>
 
-        </form>
+    <br>
 
-        <a
-            href="login.html"
-            class="login-link">
+    <a href="login.html">
+        Voltar para Login
+    </a>
 
-            Voltar para Login
-
-        </a>
-
-    </div>
+    <script type="module" src="auth.js"></script>
 
 </body>
 
