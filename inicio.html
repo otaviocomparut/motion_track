@@ -4,6 +4,673 @@
 <head>
     <meta charset="UTF-8">
     <title> motion track-inicio </title>
+
+    
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Motion Track | Fisioterapia</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #101010;
+            color: white;
+        }
+
+        :root {
+            --verde: #00f477;
+            --fundo: #101010;
+            --card: #191919;
+            --cinza: #bdbdbd;
+        }
+
+        /* MENU */
+
+        header {
+            width: 100%;
+            padding: 15px 8%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: #151515;
+            border-bottom: 1px solid rgba(0,244,119,0.15);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo img {
+            width: 90px;
+            height: 85px;
+            object-fit: contain;
+            background: white;
+            border-radius: 5px;
+        }
+
+        nav {
+            display: flex;
+            align-items: center;
+            gap: 35px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-size: 14px;
+            transition: 0.3s;
+        }
+
+        nav a:hover {
+            color: var(--verde);
+        }
+
+        .botoes-menu {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .btn-login {
+            color: var(--verde);
+            border: 1px solid var(--verde);
+            padding: 10px 22px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 13px;
+            transition: 0.3s;
+        }
+
+        .btn-login:hover {
+            background: var(--verde);
+            color: #000;
+        }
+
+        .btn-cadastro {
+            background: var(--verde);
+            color: #000;
+            padding: 11px 22px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+
+        .btn-cadastro:hover {
+            background: #00c963;
+            transform: translateY(-2px);
+        }
+
+        /* INÍCIO */
+
+        .inicio {
+            min-height: 620px;
+            padding: 100px 8%;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            background:
+                radial-gradient(circle at 85% 45%,
+                rgba(0,244,119,0.12), transparent 35%),
+                #101010;
+        }
+
+        .inicio-conteudo {
+            max-width: 720px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .tag {
+            color: var(--verde);
+            border: 1px solid rgba(0,244,119,0.4);
+            display: inline-block;
+            padding: 8px 18px;
+            border-radius: 30px;
+            font-size: 12px;
+            margin-bottom: 25px;
+            letter-spacing: 1px;
+        }
+
+        .inicio h1 {
+            font-size: clamp(38px, 5vw, 65px);
+            line-height: 1.2;
+            margin-bottom: 25px;
+            font-weight: 800;
+        }
+
+        .inicio h1 span {
+            color: var(--verde);
+        }
+
+        .inicio p {
+            color: var(--cinza);
+            font-size: 16px;
+            line-height: 1.9;
+            max-width: 600px;
+            margin-bottom: 35px;
+        }
+
+        .btn-principal {
+            display: inline-block;
+            background: var(--verde);
+            color: #000;
+            padding: 15px 30px;
+            text-decoration: none;
+            border-radius: 9px;
+            font-weight: 700;
+            transition: 0.3s;
+        }
+
+        .btn-principal:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 0 25px rgba(0,244,119,0.35);
+        }
+
+        .destaque {
+            color: var(--verde);
+            margin-left: 12px;
+            font-size: 14px;
+            text-decoration: none;
+        }
+
+        /* DIFERENCIAIS */
+
+        .diferenciais {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            padding: 0 8% 80px;
+        }
+
+        .diferencial {
+            background: var(--card);
+            border: 1px solid #292929;
+            border-radius: 14px;
+            padding: 28px;
+            transition: 0.3s;
+        }
+
+        .diferencial:hover {
+            border-color: var(--verde);
+            transform: translateY(-5px);
+        }
+
+        .icone {
+            font-size: 30px;
+            margin-bottom: 15px;
+        }
+
+        .diferencial h3 {
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+
+        .diferencial p {
+            color: var(--cinza);
+            font-size: 13px;
+            line-height: 1.8;
+        }
+
+        /* SERVIÇOS */
+
+        .servicos {
+            padding: 80px 8%;
+            background: #151515;
+            text-align: center;
+        }
+
+        .subtitulo {
+            color: var(--verde);
+            text-transform: uppercase;
+            font-size: 12px;
+            letter-spacing: 3px;
+            margin-bottom: 15px;
+        }
+
+        .titulo {
+            font-size: 36px;
+            margin-bottom: 15px;
+        }
+
+        .descricao {
+            color: var(--cinza);
+            font-size: 14px;
+            margin-bottom: 45px;
+        }
+
+        .servicos-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+            text-align: left;
+        }
+
+        .servico {
+            background: #1d1d1d;
+            border: 1px solid #303030;
+            border-radius: 14px;
+            padding: 30px;
+            transition: 0.3s;
+        }
+
+        .servico:hover {
+            border-color: var(--verde);
+            box-shadow: 0 0 20px rgba(0,244,119,0.08);
+        }
+
+        .servico .icone {
+            color: var(--verde);
+            font-size: 32px;
+        }
+
+        .servico h3 {
+            font-size: 19px;
+            margin-bottom: 12px;
+        }
+
+        .servico p {
+            color: var(--cinza);
+            font-size: 13px;
+            line-height: 1.8;
+        }
+
+        /* SOBRE */
+
+        .sobre {
+            padding: 90px 8%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 50px;
+        }
+
+        .sobre-texto {
+            max-width: 650px;
+        }
+
+        .sobre-texto h2 {
+            font-size: 36px;
+            margin-bottom: 20px;
+        }
+
+        .sobre-texto h2 span {
+            color: var(--verde);
+        }
+
+        .sobre-texto p {
+            color: var(--cinza);
+            font-size: 14px;
+            line-height: 2;
+            margin-bottom: 20px;
+        }
+
+        .sobre-card {
+            background: #191919;
+            border: 1px solid rgba(0,244,119,0.3);
+            padding: 40px;
+            border-radius: 18px;
+            text-align: center;
+            min-width: 250px;
+            box-shadow: 0 0 30px rgba(0,244,119,0.08);
+        }
+
+        .sobre-card h3 {
+            color: var(--verde);
+            font-size: 50px;
+        }
+
+        .sobre-card p {
+            color: var(--cinza);
+            font-size: 13px;
+        }
+
+        /* CONTATO */
+
+        .contato {
+            text-align: center;
+            padding: 75px 8%;
+            background:
+                radial-gradient(circle, rgba(0,244,119,0.09), transparent 65%),
+                #151515;
+        }
+
+        .contato h2 {
+            font-size: 34px;
+            margin-bottom: 15px;
+        }
+
+        .contato h2 span {
+            color: var(--verde);
+        }
+
+        .contato p {
+            color: var(--cinza);
+            margin-bottom: 30px;
+            font-size: 14px;
+        }
+
+        /* RODAPÉ */
+
+        footer {
+            background: #0b0b0b;
+            padding: 35px 8%;
+            text-align: center;
+            border-top: 1px solid #252525;
+        }
+
+        footer p {
+            color: #888;
+            font-size: 12px;
+            margin-top: 10px;
+        }
+
+        footer span {
+            color: var(--verde);
+        }
+
+        /* RESPONSIVIDADE */
+
+        @media (max-width: 850px) {
+
+            header {
+                padding: 15px 5%;
+                flex-wrap: wrap;
+                gap: 15px;
+            }
+
+            nav {
+                gap: 15px;
+                flex-wrap: wrap;
+            }
+
+            .diferenciais,
+            .servicos-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .sobre {
+                flex-direction: column;
+                align-items: stretch;
+            }
+        }
+
+        @media (max-width: 550px) {
+
+            header {
+                justify-content: center;
+            }
+
+            nav {
+                justify-content: center;
+            }
+
+            .botoes-menu {
+                justify-content: center;
+            }
+
+            .inicio {
+                padding: 80px 7%;
+                min-height: 550px;
+            }
+
+            .inicio h1 {
+                font-size: 39px;
+            }
+
+            .titulo,
+            .sobre-texto h2,
+            .contato h2 {
+                font-size: 27px;
+            }
+
+            .diferenciais {
+                padding: 0 7% 60px;
+            }
+
+            .servicos,
+            .sobre,
+            .contato {
+                padding: 65px 7%;
+            }
+
+            .destaque {
+                display: block;
+                margin: 20px 0 0;
+            }
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <!-- MENU -->
+    <header>
+
+        <a href="#inicio" class="logo">
+            <img src="imagens do site e logos/logo.svg.png" alt="">
+        </a>
+
+        <nav>
+            <a href="#inicio">Início</a>
+            <a href="#servicos">Serviços</a>
+            <a href="#sobre">Sobre nós</a>
+            <a href="#contato">Contato</a>
+        </nav>
+
+        <div class="botoes-menu">
+            <a href="login.html" class="btn-login">Login</a>
+            <a href="cadastro.html" class="btn-cadastro">Criar conta</a>
+        </div>
+
+    </header>
+
+    <!-- INÍCIO -->
+    <section class="inicio" id="inicio">
+
+        <div class="inicio-conteudo">
+
+            <span class="tag">MOTION TRACK • FISIOTERAPIA</span>
+
+            <h1>
+                Seu movimento,
+                <span>nossa missão.</span>
+            </h1>
+
+            <p>
+                Cuidar de você é o nosso movimento.
+                Oferecemos acompanhamento fisioterapêutico
+                com atenção, dedicação e cuidado individualizado,
+                ajudando você a conquistar mais saúde,
+                qualidade de vida e bem-estar.
+            </p>
+
+            <a href="#contato" class="btn-principal">
+                Conheça nossos serviços →
+            </a>
+
+            <a href="cadastro.html" class="destaque">
+                Faça seu cadastro
+            </a>
+
+        </div>
+
+    </section>
+
+    <!-- DIFERENCIAIS -->
+    <section class="diferenciais">
+
+        <div class="diferencial">
+            <div class="icone">💚</div>
+            <h3>Cuidado individualizado</h3>
+            <p>
+                Atendimento focado nas necessidades
+                e objetivos de cada paciente.
+            </p>
+        </div>
+
+        <div class="diferencial">
+            <div class="icone">🏃</div>
+            <h3>Movimento e saúde</h3>
+            <p>
+                Incentivamos uma vida mais ativa,
+                saudável e com qualidade de movimento.
+            </p>
+        </div>
+
+        <div class="diferencial">
+            <div class="icone">🎯</div>
+            <h3>Foco nos resultados</h3>
+            <p>
+                Acompanhamento dedicado à evolução
+                e ao bem-estar de cada pessoa.
+            </p>
+        </div>
+
+    </section>
+
+    <!-- SERVIÇOS -->
+    <section class="servicos" id="servicos">
+
+        <div class="subtitulo">O que oferecemos</div>
+
+        <h2 class="titulo">Nossos serviços</h2>
+
+        <p class="descricao">
+            Conheça algumas das áreas de atuação da Motion Track.
+        </p>
+
+        <div class="servicos-grid">
+
+            <div class="servico">
+                <div class="icone">🦴</div>
+                <h3>Fisioterapia ortopédica</h3>
+                <p>
+                    Cuidado e reabilitação de condições
+                    musculoesqueléticas, dores e limitações
+                    de movimento.
+                </p>
+            </div>
+
+            <div class="servico">
+                <div class="icone">🏋️</div>
+                <h3>Reabilitação física</h3>
+                <p>
+                    Acompanhamento para recuperação
+                    funcional e melhora da mobilidade.
+                </p>
+            </div>
+
+            <div class="servico">
+                <div class="icone">⚡</div>
+                <h3>Fisioterapia esportiva</h3>
+                <p>
+                    Prevenção e recuperação de lesões
+                    relacionadas à prática de atividades físicas.
+                </p>
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- SOBRE -->
+    <section class="sobre" id="sobre">
+
+        <div class="sobre-texto">
+
+            <div class="subtitulo">Conheça a Motion Track</div>
+
+            <h2>
+                Cuidando de você e
+                <span>do seu bem-estar.</span>
+            </h2>
+
+            <p>
+                A Motion Track é dedicada à área de fisioterapia,
+                trabalhando para proporcionar mais qualidade
+                de vida, saúde e liberdade de movimento.
+            </p>
+
+            <p>
+                Atuando há mais de 5 anos na área de fisioterapia,
+                buscamos oferecer um atendimento humanizado,
+                responsável e comprometido com cada paciente.
+            </p>
+
+            <a href="#contato" class="btn-principal">
+                Entre em contato
+            </a>
+
+        </div>
+
+        <div class="sobre-card">
+
+            <h3>+5</h3>
+
+            <p>
+                Anos de atuação na área
+                de fisioterapia
+            </p>
+
+        </div>
+
+    </section>
+
+    <!-- CONTATO -->
+    <section class="contato" id="contato">
+
+        <div class="subtitulo">Estamos esperando por você</div>
+
+        <h2>
+            Seu bem-estar começa <span>aqui!</span>
+        </h2>
+
+        <p>
+            Dê o primeiro passo para uma vida com mais saúde
+            e qualidade de movimento.
+        </p>
+
+        <a href="cadastro.html" class="btn-principal">
+            Comece agora →
+        </a>
+
+    </section>
+
+    <!-- RODAPÉ -->
+    <footer>
+
+        <h3>MOTION <span>TRACK</span></h3>
+
+        <p>
+            Cuidando do seu movimento, transformando vidas.
+        </p>
+
+        <p>
+            © 2026 Motion Track - Todos os direitos reservados.
+        </p>
+
+    </footer>
+
+</body>
+</html>
+
     <link rel="stylesheet" href="style.css" />
 </head>
 
