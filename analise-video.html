@@ -1,41 +1,172 @@
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 
 <head>
-
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Análise de Vídeo</title>
+    <title>Análise de Vídeo | Motion Track</title>
 
     <style>
-
-        #container{
-
-    position:relative;
-
-    width:800px;
-
-    height:1000px;
-
-}
-
-        video,
-        canvas{
-
-            position:absolute;
-            top:0;
-            left:0;
-
-            width:800px;
-
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
 
-        #resultado{
+        body {
+            background-color: #080808;
+            color: #ffffff;
+            font-family: Arial, Helvetica, sans-serif;
+            min-height: 100vh;
+        }
 
-            margin-top:500px;
+        /* CABEÇALHO */
 
-            font-size:18px;
+        header {
+            background-color: #111111;
+            padding: 18px 30px;
+            border-bottom: 2px solid #00ff66;
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            box-shadow: 0 3px 15px rgba(0, 255, 102, 0.08);
+        }
 
+        .logo {
+            width: 65px;
+            height: 65px;
+            background-color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .titulo h1 {
+            color: #00ff66;
+            font-size: 30px;
+            margin-bottom: 5px;
+        }
+
+        .titulo p {
+            font-size: 16px;
+            color: #ffffff;
+        }
+
+        /* CONTEÚDO PRINCIPAL */
+
+        main {
+            width: 90%;
+            max-width: 1100px;
+            margin: 30px auto;
+        }
+
+        .card {
+            background-color: #191919;
+            border-radius: 16px;
+            padding: 25px;
+            margin-bottom: 24px;
+            box-shadow: 0 0 18px rgba(0, 255, 102, 0.07);
+        }
+
+        .card h2 {
+            color: #00ff66;
+            font-size: 19px;
+            margin-bottom: 22px;
+        }
+
+        /* CONTAINER DO VÍDEO */
+
+        #container {
+            position: relative;
+            width: 800px;
+            max-width: 100%;
+            height: 1000px;
+            margin: 0 auto;
+            background-color: #222222;
+            border: 1px solid #333333;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        video,
+        canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+        }
+
+        video {
+            background-color: #000000;
+            border-radius: 10px;
+        }
+
+        canvas {
+            pointer-events: none;
+        }
+
+        /* RESULTADO DA ANÁLISE */
+
+        #resultado {
+            margin-top: 500px;
+            padding: 20px;
+            background-color: #222222;
+            border-left: 4px solid #00ff66;
+            border-radius: 8px;
+            font-size: 18px;
+            line-height: 1.7;
+            color: #ffffff;
+            min-height: 60px;
+        }
+
+        /* RESPONSIVIDADE */
+
+        @media (max-width: 600px) {
+
+            header {
+                padding: 15px;
+            }
+
+            .logo {
+                width: 50px;
+                height: 50px;
+            }
+
+            .titulo h1 {
+                font-size: 23px;
+            }
+
+            .titulo p {
+                font-size: 13px;
+            }
+
+            main {
+                width: 94%;
+                margin: 20px auto;
+            }
+
+            .card {
+                padding: 15px;
+            }
+
+            #container {
+                height: 1000px;
+            }
+
+            #resultado {
+                font-size: 15px;
+                padding: 15px;
+            }
         }
 
     </style>
@@ -44,21 +175,49 @@
 
 <body>
 
-    <h1>Teste MediaPipe</h1>
+    <!-- CABEÇALHO -->
 
-    <div id="container">
+    <header>
 
-        <video
-            id="video"
-            controls
-            crossorigin="anonymous">
-        </video>
+        <div class="logo">
+            <!-- Insira aqui o caminho da sua logo, se tiver -->
+            <img src="imagens do site e logos/logo.svg.png" alt="">
+        </div>
 
-        <canvas id="canvas"></canvas>
+        <div class="titulo">
+            <h1>Motion Track</h1>
+            <p>Painel do Profissional</p>
+        </div>
 
-    </div>
+    </header>
 
-    <div id="resultado"></div>
+    <!-- CONTEÚDO -->
+
+    <main>
+
+        <section class="card">
+
+            <h2>Análise de Vídeo</h2>
+
+            <div id="container">
+
+                <video
+                    id="video"
+                    controls
+                    crossorigin="anonymous">
+                </video>
+
+                <canvas id="canvas"></canvas>
+
+            </div>
+
+            <div id="resultado"></div>
+
+        </section>
+
+    </main>
+
+    <!-- CONEXÃO ORIGINAL COM JAVASCRIPT -->
 
     <script
         type="module"

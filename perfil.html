@@ -359,6 +359,60 @@
                 grid-template-columns: 1fr;
             }
         }
+        
+/* BOTÃO ENVIAR VÍDEO */
+
+.botao-enviar-video {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+
+    background: #00ed70;
+    color: #061009;
+
+    padding: 14px 22px;
+    border-radius: 10px;
+    border: none;
+
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+
+    text-decoration: none;
+    cursor: pointer;
+
+    transition: .3s;
+    box-shadow: 0 4px 15px rgba(0, 237, 112, .12);
+}
+
+.botao-enviar-video:hover {
+    background: #00c85e;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 237, 112, .2);
+}
+
+.botao-enviar-video:active {
+    transform: scale(.97);
+}
+
+.area-enviar-video {
+    margin-bottom: 22px;
+}
+
+.area-enviar-video p {
+    color: #a0aaa3;
+    font-size: 13px;
+    margin-bottom: 15px;
+    line-height: 1.6;
+}
+
+@media (max-width: 650px) {
+    .botao-enviar-video {
+        width: 100%;
+    }
+}
+
 
     </style>
 
@@ -454,6 +508,21 @@
                 </div>
 
             </div>
+
+<div class="area-enviar-video">
+
+    <p>
+        Deseja enviar um vídeo para realizar uma análise dos seus movimentos?
+    </p>
+
+    <a href="analise-video.html" class="botao-enviar-video">
+        🎥 Enviar Vídeo para Análise
+    </a>
+
+</div>
+
+<div id="listaVideosPerfil"></div>
+
 
             <div id="listaExerciciosPerfil"></div>
 
