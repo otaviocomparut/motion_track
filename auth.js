@@ -15,143 +15,178 @@ from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 const cadastroForm =
 document.getElementById(
-"cadastroForm"
+    "cadastroForm"
 );
 
 if(cadastroForm){
 
-cadastroForm.addEventListener(
-"submit",
-async (e)=>{
+    cadastroForm.addEventListener(
+        "submit",
+        async (e)=>{
 
-e.preventDefault();
+            e.preventDefault();
 
-const nome =
-document.getElementById(
-"nome"
-).value;
+            const nome =
+            document.getElementById(
+                "nome"
+            ).value;
 
-const email =
-document.getElementById(
-"emailCadastro"
-).value;
+            const email =
+            document.getElementById(
+                "emailCadastro"
+            ).value;
 
-const senha =
-document.getElementById(
-"senhaCadastro"
-).value;
+            const senha =
+            document.getElementById(
+                "senhaCadastro"
+            ).value;
 
-const tipo =
-document.getElementById(
-"tipoUsuario"
-).value;
+            const tipo =
+            document.getElementById(
+                "tipoUsuario"
+            ).value;
 
-try{
+            try{
 
-const credencial =
-await createUserWithEmailAndPassword(
-auth,
-email,
-senha
-);
+                const credencial =
+                await createUserWithEmailAndPassword(
+                    auth,
+                    email,
+                    senha
+                );
 
-await setDoc(
-doc(
-db,
-"usuarios",
-credencial.user.uid
-),
-{
-nome,
-email,
-tipo
-}
-);
+                await setDoc(
+                    doc(
+                        db,
+                        "usuarios",
+                        credencial.user.uid
+                    ),
+                    {
+                        nome,
+                        email,
+                        tipo
+                    }
+                );
 
-alert(
-"Cadastro realizado!"
-);
+                alert(
+                    "Cadastro realizado!"
+                );
 
-window.location.href =
-"login.html";
+                window.location.href =
+                "login.html";
 
-}catch(erro){
+            }
+            catch(erro){
 
-alert(
-erro.message
-);
+                console.error(
+                    "ERRO FIREBASE:",
+                    erro
+                );
 
-}
+                alert(
+                    erro.code +
+                    "\n\n" +
+                    erro.message
+                );
 
-});
+            }
+
+        }
+
+    );
+
 }
 
 const loginForm =
 document.getElementById(
-"loginForm"
+    "loginForm"
 );
 
 if(loginForm){
 
-loginForm.addEventListener(
-"submit",
-async (e)=>{
+    loginForm.addEventListener(
+        "submit",
+        async (e)=>{
 
-e.preventDefault();
+            e.preventDefault();
 
-const email =
-document.getElementById(
-"email"
-).value;
+            const email =
+            document.getElementById(
+                "email"
+            ).value;
 
-const senha =
-document.getElementById(
-"senha"
-).value;
+            const senha =
+            document.getElementById(
+                "senha"
+            ).value;
 
-try{
+            try{
 
-const credencial =
-await signInWithEmailAndPassword(
-auth,
-email,
-senha
-);
+                const credencial =
+                await signInWithEmailAndPassword(
+                    auth,
+                    email,
+                    senha
+                );
 
-const docRef =
-await getDoc(
-doc(
-db,
-"usuarios",
-credencial.user.uid
-)
-);
+                const docRef =
+                await getDoc(
 
-const usuario =
-docRef.data();
+                    doc(
+                        db,
+                        "usuarios",
+                        credencial.user.uid
+                    )
 
-if(
-usuario.tipo ===
-"profissional"
-){
+                );
 
-window.location.href =
-"dashboard-profissional.html";
+                const usuario =
+                docRef.data();
 
-}else{
+                if(
+                    usuario?.tipo ===
+                    "profissional"
+                ){
 
-window.location.href =
-"dashboard-paciente.html";
+                    window.location.href =
+                    "dashboard-profissional.html";
 
-}
+                }
+                else if(
+                    usuario?.tipo ===
+                    "paciente"
+                ){
 
-}catch(erro){
+                    window.location.href =
+                    "dashboard-paciente.html";
 
-alert(
-"Login inválido"
-);
+                }
+                else{
 
-}
+                    alert(
+                        "Tipo de usuário não encontrado."
+                    );
 
-});
+                }
+
+            }
+            catch(erro){
+
+                console.error(
+                    "ERRO LOGIN:",
+                    erro
+                );
+
+                alert(
+                    erro.code +
+                    "\n\n" +
+                    erro.message
+                );
+
+            }
+
+        }
+
+    );
+
 }
