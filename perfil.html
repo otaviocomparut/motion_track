@@ -1,47 +1,494 @@
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 
 <head>
     <meta charset="UTF-8">
-    <title>Perfil do Paciente</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Perfil do Paciente | Motion Track</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --verde: #00ed70;
+            --verde-escuro: #00c85e;
+            --fundo: #080b09;
+            --card: #151a17;
+            --cinza: #a0aaa3;
+            --borda: rgba(0, 237, 112, 0.15);
+        }
+
+        body {
+            background-color: var(--fundo);
+            color: #ffffff;
+            font-family: 'Inter', Arial, sans-serif;
+            min-height: 100vh;
+        }
+
+        /* CABEÇALHO */
+
+        header {
+            background-color: #101411;
+            border-bottom: 2px solid var(--verde);
+            padding: 18px 5%;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            box-shadow: 0 4px 25px rgba(0, 237, 112, 0.05);
+        }
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 17px;
+        }
+
+        .logo-area img {
+            width: 65px;
+            height: 65px;
+            object-fit: contain;
+            background: white;
+            border-radius: 8px;
+            padding: 5px;
+        }
+
+        .logo-area h1 {
+            color: var(--verde);
+            font-size: 28px;
+            font-weight: 800;
+        }
+
+        .logo-area p {
+            color: #c5cec8;
+            font-size: 13px;
+            margin-top: 4px;
+        }
+
+        /* BOTÃO VOLTAR */
+
+        .voltar {
+            color: var(--verde);
+            text-decoration: none;
+            border: 1px solid var(--borda);
+            padding: 11px 18px;
+            border-radius: 10px;
+            font-size: 13px;
+            font-weight: 600;
+            transition: .3s;
+        }
+
+        .voltar:hover {
+            background: var(--verde);
+            color: #000;
+        }
+
+        /* CONTEÚDO PRINCIPAL */
+
+        .container {
+            width: 90%;
+            max-width: 1100px;
+            margin: 45px auto;
+        }
+
+        .titulo-principal {
+            margin-bottom: 30px;
+        }
+
+        .titulo-principal span {
+            color: var(--verde);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .titulo-principal h2 {
+            font-size: 31px;
+            margin: 12px 0;
+        }
+
+        .titulo-principal p {
+            color: var(--cinza);
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        /* CARTÕES */
+
+        .card {
+            background: linear-gradient(145deg, #191f1b, #121713);
+            border: 1px solid var(--borda);
+            border-radius: 17px;
+            padding: 28px;
+            margin-bottom: 25px;
+
+            box-shadow: 0 8px 25px rgba(0, 0, 0, .25);
+            transition: .3s;
+        }
+
+        .card:hover {
+            border-color: rgba(0, 237, 112, .35);
+            box-shadow: 0 10px 30px rgba(0, 237, 112, .06);
+            transform: translateY(-2px);
+        }
+
+        /* TÍTULOS DOS CARTÕES */
+
+        .card-titulo {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 25px;
+        }
+
+        .icone {
+            width: 45px;
+            height: 45px;
+
+            background: rgba(0, 237, 112, .10);
+            border: 1px solid var(--borda);
+            border-radius: 12px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 21px;
+        }
+
+        .card-titulo h3 {
+            font-size: 17px;
+            font-weight: 700;
+        }
+
+        .card-titulo p {
+            color: var(--cinza);
+            font-size: 12px;
+            margin-top: 5px;
+        }
+
+        /* DADOS DO PACIENTE */
+
+        .dados-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 18px;
+        }
+
+        .dado {
+            background: #202722;
+            border: 1px solid rgba(255,255,255,.04);
+            padding: 20px;
+            border-radius: 12px;
+        }
+
+        .dado label {
+            display: block;
+            color: var(--cinza);
+            font-size: 12px;
+            margin-bottom: 10px;
+        }
+
+        .dado span {
+            color: var(--verde);
+            font-size: 15px;
+            font-weight: 600;
+            overflow-wrap: anywhere;
+        }
+
+        /* HISTÓRICOS */
+
+        #listaExerciciosPerfil,
+        #listaVideosPerfil {
+            display: flex;
+            flex-direction: column;
+            gap: 13px;
+        }
+
+        #listaExerciciosPerfil > *,
+        #listaVideosPerfil > * {
+            max-width: 100%;
+        }
+
+        /* ITENS GERADOS PELO JAVASCRIPT */
+
+        #listaExerciciosPerfil > div,
+        #listaVideosPerfil > div {
+            background: #202722;
+            border: 1px solid rgba(255,255,255,.05);
+            border-radius: 12px;
+            padding: 20px;
+            transition: .3s;
+        }
+
+        #listaExerciciosPerfil > div:hover,
+        #listaVideosPerfil > div:hover {
+            border-color: rgba(0, 237, 112, .3);
+            background: #1c241f;
+        }
+
+        /* TEXTOS DOS HISTÓRICOS */
+
+        #listaExerciciosPerfil h4,
+        #listaVideosPerfil h4 {
+            color: var(--verde);
+            margin-bottom: 10px;
+        }
+
+        #listaExerciciosPerfil p,
+        #listaVideosPerfil p {
+            color: var(--cinza);
+            font-size: 13px;
+            line-height: 1.7;
+        }
+
+        /* VÍDEOS */
+
+        #listaVideosPerfil video {
+            width: 100%;
+            max-width: 550px;
+            border-radius: 12px;
+            margin-top: 15px;
+            border: 1px solid var(--borda);
+        }
+
+        /* LINKS E BOTÕES DENTRO DOS HISTÓRICOS */
+
+        #listaExerciciosPerfil a,
+        #listaVideosPerfil a {
+            color: var(--verde);
+            text-decoration: none;
+        }
+
+        #listaExerciciosPerfil a:hover,
+        #listaVideosPerfil a:hover {
+            color: white;
+        }
+
+        #listaExerciciosPerfil button,
+        #listaVideosPerfil button {
+            background: var(--verde);
+            color: #061009;
+            border: none;
+            padding: 11px 18px;
+            border-radius: 9px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: .3s;
+            margin-top: 10px;
+        }
+
+        #listaExerciciosPerfil button:hover,
+        #listaVideosPerfil button:hover {
+            background: var(--verde-escuro);
+        }
+
+        /* RODAPÉ */
+
+        footer {
+            border-top: 1px solid var(--borda);
+            text-align: center;
+            padding: 25px;
+            color: #758078;
+            font-size: 12px;
+            margin-top: 60px;
+        }
+
+        footer span {
+            color: var(--verde);
+            font-weight: 700;
+        }
+
+        /* RESPONSIVIDADE */
+
+        @media (max-width: 650px) {
+
+            header {
+                padding: 15px 4%;
+            }
+
+            .logo-area {
+                gap: 10px;
+            }
+
+            .logo-area img {
+                width: 48px;
+                height: 48px;
+            }
+
+            .logo-area h1 {
+                font-size: 20px;
+            }
+
+            .logo-area p {
+                font-size: 11px;
+            }
+
+            .voltar {
+                padding: 9px 11px;
+                font-size: 11px;
+            }
+
+            .container {
+                width: 92%;
+                margin: 30px auto;
+            }
+
+            .titulo-principal h2 {
+                font-size: 25px;
+            }
+
+            .card {
+                padding: 20px;
+            }
+
+            .dados-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+    </style>
+
 </head>
 
 <body>
 
-    <h1>Perfil do Paciente</h1>
+    <!-- CABEÇALHO -->
 
-    <hr>
+    <header>
 
-    <h3>Dados</h3>
+        <div class="logo-area">
 
-    <p>
-        Nome:
-        <span id="nomePaciente"></span>
-    </p>
+            <img src="imagens do site e logos/logo.svg.png" alt="Motion Track">
 
-    <p>
-        Email:
-        <span id="emailPaciente"></span>
-    </p>
+            <div>
+                <h1>Motion Track</h1>
+                <p>Perfil do Paciente</p>
+            </div>
 
-    <hr>
+        </div>
 
-   <h3>Histórico de Exercícios</h3>
+        <a href="dashboard-paciente.html" class="voltar">
+            ← Voltar
+        </a>
 
-<div id="listaExerciciosPerfil"></div>
+    </header>
 
+    <!-- CONTEÚDO PRINCIPAL -->
 
-    <hr>
+    <main class="container">
 
-    <h3>Histórico de Vídeos</h3>
+        <section class="titulo-principal">
 
-<div id="listaVideosPerfil"></div>
+            <span>Minha conta</span>
 
-    <script
-        type="module"
-        src="perfil.js">
-    </script>
+            <h2>Meu Perfil</h2>
+
+            <p>
+                Consulte seus dados pessoais e acompanhe seu histórico de atividades.
+            </p>
+
+        </section>
+
+        <!-- DADOS PESSOAIS -->
+
+        <section class="card">
+
+            <div class="card-titulo">
+
+                <div class="icone">👤</div>
+
+                <div>
+                    <h3>Dados Pessoais</h3>
+                    <p>Informações da sua conta.</p>
+                </div>
+
+            </div>
+
+            <div class="dados-grid">
+
+                <div class="dado">
+
+                    <label>Nome completo</label>
+
+                    <span id="nomePaciente"></span>
+
+                </div>
+
+                <div class="dado">
+
+                    <label>E-mail</label>
+
+                    <span id="emailPaciente"></span>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- HISTÓRICO DE EXERCÍCIOS -->
+
+        <section class="card">
+
+            <div class="card-titulo">
+
+                <div class="icone">🏋️</div>
+
+                <div>
+                    <h3>Histórico de Exercícios</h3>
+                    <p>Acompanhe os exercícios enviados pelo profissional.</p>
+                </div>
+
+            </div>
+
+            <div id="listaExerciciosPerfil"></div>
+
+        </section>
+
+        <!-- HISTÓRICO DE VÍDEOS -->
+
+        <section class="card">
+
+            <div class="card-titulo">
+
+                <div class="icone">🎥</div>
+
+                <div>
+                    <h3>Histórico de Vídeos</h3>
+                    <p>Consulte os vídeos relacionados às suas atividades.</p>
+                </div>
+
+            </div>
+
+            <div id="listaVideosPerfil"></div>
+
+        </section>
+
+    </main>
+
+    <!-- RODAPÉ -->
+
+    <footer>
+        © 2026 <span>Motion Track</span> - Todos os direitos reservados.
+    </footer>
+
+    <!-- LINKAGEM ORIGINAL COM JAVASCRIPT -->
+
+    <script type="module" src="perfil.js"></script>
 
 </body>
-
 </html>

@@ -1,30 +1,414 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
 
+<!DOCTYPE html>
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <a href="perfil.html">
-    Meu Perfil
-</a>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<hr>
-    <title>Dashboard Paciente</title>
+    <title>Painel do Paciente | Motion Track</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --verde: #00ed70;
+            --verde-escuro: #00c85e;
+            --fundo: #080b09;
+            --card: #151a17;
+            --card-hover: #1c241f;
+            --texto: #ffffff;
+            --cinza: #a0aaa3;
+            --borda: rgba(0, 237, 112, 0.12);
+        }
+
+        body {
+            background: var(--fundo);
+            color: var(--texto);
+            font-family: 'Inter', Arial, sans-serif;
+            min-height: 100vh;
+        }
+
+        /* CABEÇALHO */
+
+        header {
+            background: #101411;
+            border-bottom: 1px solid var(--verde);
+            padding: 18px 5%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 4px 25px rgba(0, 237, 112, 0.05);
+        }
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 17px;
+        }
+
+        .logo-area img {
+            width: 65px;
+            height: 65px;
+            object-fit: contain;
+            background: white;
+            border-radius: 8px;
+            padding: 5px;
+        }
+
+        .logo-area h1 {
+            color: var(--verde);
+            font-size: 28px;
+            font-weight: 800;
+            letter-spacing: -1px;
+        }
+
+        .logo-area p {
+            font-size: 13px;
+            color: #c5cec8;
+            margin-top: 4px;
+        }
+
+        .perfil-link {
+            color: var(--verde);
+            text-decoration: none;
+            border: 1px solid var(--borda);
+            padding: 11px 18px;
+            border-radius: 10px;
+            font-size: 13px;
+            font-weight: 600;
+            transition: .3s;
+        }
+
+        .perfil-link:hover {
+            background: var(--verde);
+            color: #000;
+        }
+
+        /* CONTEÚDO */
+
+        .container {
+            width: 90%;
+            max-width: 1100px;
+            margin: 55px auto;
+        }
+
+        .boas-vindas {
+            margin-bottom: 35px;
+        }
+
+        .boas-vindas span {
+            color: var(--verde);
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 700;
+        }
+
+        .boas-vindas h2 {
+            font-size: 32px;
+            margin: 12px 0;
+            font-weight: 800;
+        }
+
+        .boas-vindas p {
+            color: var(--cinza);
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        /* CARTÕES */
+
+        .card {
+            background: linear-gradient(145deg, #191f1b, #121713);
+            border: 1px solid var(--borda);
+            padding: 28px;
+            border-radius: 18px;
+            margin-bottom: 25px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, .25);
+            transition: .3s ease;
+        }
+
+        .card:hover {
+            border-color: rgba(0, 237, 112, .35);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0, 237, 112, .06);
+        }
+
+        .card-titulo {
+            display: flex;
+            align-items: center;
+            gap: 13px;
+            margin-bottom: 25px;
+        }
+
+        .icone {
+            width: 43px;
+            height: 43px;
+            background: rgba(0, 237, 112, .10);
+            border: 1px solid rgba(0, 237, 112, .18);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--verde);
+            font-size: 20px;
+        }
+
+        .card-titulo h3 {
+            color: var(--texto);
+            font-size: 17px;
+            font-weight: 700;
+        }
+
+        .card-titulo p {
+            color: var(--cinza);
+            font-size: 12px;
+            margin-top: 5px;
+        }
+
+        /* EXERCÍCIOS */
+
+        .exercicio {
+            background: #202722;
+            border: 1px solid rgba(255,255,255,.04);
+            padding: 22px;
+            border-radius: 13px;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+            transition: .3s;
+        }
+
+        .exercicio:hover {
+            background: var(--card-hover);
+            border-color: rgba(0, 237, 112, .3);
+        }
+
+        .exercicio-info h4 {
+            color: var(--verde);
+            font-size: 15px;
+            margin-bottom: 8px;
+        }
+
+        .exercicio-info p {
+            color: var(--cinza);
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        .status {
+            display: inline-block;
+            background: rgba(0, 237, 112, .10);
+            color: var(--verde);
+            padding: 6px 11px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 700;
+            margin-top: 10px;
+        }
+
+        /* BOTÕES */
+
+        button {
+            background: var(--verde);
+            color: #061009;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 9px;
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: .3s;
+            white-space: nowrap;
+        }
+
+        button:hover {
+            background: var(--verde-escuro);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 18px rgba(0, 237, 112, .2);
+        }
+
+        /* VÍDEOS */
+
+        video {
+            width: 100%;
+            max-width: 550px;
+            border-radius: 13px;
+            margin-top: 15px;
+            border: 1px solid var(--borda);
+        }
+
+        /* MENSAGEM VAZIA */
+
+        .vazio {
+            text-align: center;
+            padding: 35px 15px;
+            color: var(--cinza);
+        }
+
+        .vazio .icone-vazio {
+            font-size: 35px;
+            margin-bottom: 15px;
+        }
+
+        .vazio p {
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        /* RODAPÉ */
+
+        footer {
+            border-top: 1px solid var(--borda);
+            padding: 25px;
+            text-align: center;
+            color: #758078;
+            font-size: 12px;
+            margin-top: 70px;
+        }
+
+        footer span {
+            color: var(--verde);
+            font-weight: 700;
+        }
+
+        /* RESPONSIVIDADE */
+
+        @media (max-width: 650px) {
+
+            header {
+                padding: 15px 5%;
+            }
+
+            .logo-area {
+                gap: 10px;
+            }
+
+            .logo-area img {
+                width: 48px;
+                height: 48px;
+            }
+
+            .logo-area h1 {
+                font-size: 20px;
+            }
+
+            .logo-area p {
+                font-size: 11px;
+            }
+
+            .perfil-link {
+                padding: 9px 11px;
+                font-size: 11px;
+            }
+
+            .container {
+                width: 92%;
+                margin: 35px auto;
+            }
+
+            .boas-vindas h2 {
+                font-size: 25px;
+            }
+
+            .card {
+                padding: 20px;
+            }
+
+            .exercicio {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .exercicio button {
+                width: 100%;
+            }
+        }
+    </style>
 </head>
 
 <body>
 
-    <h1>Painel do Paciente</h1>
+    <!-- CABEÇALHO -->
 
-    <h2 id="nomePacienteLogado"></h2>
+    <header>
 
-    <hr>
+        <a class="logo-area">
+            <img src="imagens do site e logos/logo.svg.png" alt="">
+        </a>
+                <h1>Motion Track</h1>
+                <script type="module" src="exercicios.js"></script>
+                <p>Painel do Paciente</p>
+            </div>
+        </div>
 
-    <h3>Exercícios Recebidos</h3>
+        <a href="perfil.html" class="perfil-link">
+            Meu Perfil
+        </a>
 
-    <ul id="listaExercicios"></ul>
+    </header>
 
-    <script type="module" src="exercicios.js"></script>
+    <!-- CONTEÚDO PRINCIPAL -->
+
+    <main class="container">
+
+        <section class="boas-vindas">
+
+            <span>Área do paciente</span>
+
+            <h2>Bem-vindo ao seu painel!</h2>
+
+            <p>
+                Acompanhe seus exercícios e confira as atividades
+                enviadas pelo seu profissional.
+            </p>
+
+        </section>
+
+        <!-- EXERCÍCIOS RECEBIDOS -->
+
+        <section class="card">
+
+            <div class="card-titulo">
+
+                <div class="icone">🏋️</div>
+
+                <div>
+                    <h3>Exercícios Recebidos</h3>
+                    <p>Confira os exercícios enviados para você.</p>
+                </div>
+
+            </div>
+
+            <!-- MANTENHA AQUI SEU CÓDIGO PHP DOS EXERCÍCIOS -->
+
+            <div class="vazio">
+                <div class="icone-vazio">📋</div>
+
+                <p>
+                    Seus exercícios recebidos aparecerão aqui.
+                </p>
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- RODAPÉ -->
+
+    <footer>
+        © 2026 <span>Motion Track</span> - Todos os direitos reservados.
+    </footer>
 
 </body>
-
 </html>
